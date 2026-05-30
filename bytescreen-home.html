@@ -1,0 +1,1717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bytescreen Tech – Network Firewall &amp; SD-WAN Solutions</title>
+<meta name="description" content="Bytescreen delivers AI-powered next-generation firewalls, secure SD-WAN, and AAA hotspot solutions for modern enterprises. Secure, connect, and succeed."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --navy: #2c3370;
+    --navy-dark: #1a1f4a;
+    --navy-mid: #232960;
+    --navy-light: #3d468a;
+    --navy-faint: #eef0f9;
+    --white: #ffffff;
+    --mist: #a2a6b5;
+    --accent: #5468ff;
+    --accent-bright: #7b8fff;
+    --accent-vivid: #4f5cff;
+    --cyan: #00d4ff;
+    --cyan-dim: rgba(0,212,255,0.15);
+    --violet: #9b59ff;
+    --green-neon: #00f5a0;
+    --orange: #ff6b35;
+    --text-body: #3a3e60;
+    --text-muted: #7478a0;
+    --border: #d8dcf0;
+    --font-head: 'Outfit', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--white); color: var(--text-body); overflow-x: hidden; }
+
+  /* ===================== NAV ===================== */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    height: 68px; display: flex; align-items: center;
+    transition: background 0.4s, box-shadow 0.4s;
+  }
+  nav.scrolled {
+    background: rgba(26,31,74,0.97);
+    backdrop-filter: blur(20px);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.06), 0 8px 32px rgba(0,0,0,0.35);
+  }
+  .nav-inner {
+    max-width: 1200px; margin: 0 auto; width: 100%;
+    padding: 0 2rem; display: flex; align-items: center; justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--font-head); font-size: 1.35rem; font-weight: 800;
+    color: var(--white); text-decoration: none; letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 0.55rem; flex-shrink: 0;
+  }
+  .logo-mark {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: linear-gradient(135deg, var(--accent-vivid), var(--violet));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 16px rgba(79,92,255,0.6); transition: box-shadow 0.3s;
+  }
+  .nav-logo:hover .logo-mark { box-shadow: 0 0 28px rgba(79,92,255,0.9); }
+  .logo-mark svg { width: 18px; height: 18px; }
+  .nav-logo .logo-accent { color: var(--accent-bright); }
+
+  /* Main link list */
+  .nav-links { display: flex; align-items: center; gap: 0.1rem; list-style: none; }
+  .nav-links > li { position: relative; }
+  .nav-links > li > a {
+    color: rgba(255,255,255,0.72); text-decoration: none;
+    font-size: 0.875rem; font-weight: 500;
+    padding: 0.45rem 0.8rem; border-radius: 7px;
+    transition: color 0.2s, background 0.2s;
+    display: flex; align-items: center; gap: 0.3rem; white-space: nowrap;
+  }
+  .nav-links > li > a:hover,
+  .nav-links > li.open > a { color: white; background: rgba(255,255,255,0.09); }
+  .nav-links > li > a.active { color: white; }
+
+  /* Chevron on dropdown triggers */
+  .nav-chevron {
+    display: inline-block; width: 14px; height: 14px;
+    transition: transform 0.25s;
+  }
+  .nav-chevron path { stroke: currentColor; }
+  .nav-links > li.open > a .nav-chevron { transform: rotate(180deg); }
+
+  /* CTA button */
+  .nav-cta {
+    background: linear-gradient(135deg, var(--accent-vivid), var(--violet)) !important;
+    color: white !important; font-weight: 600 !important;
+    padding: 0.45rem 1.2rem !important; border-radius: 8px !important;
+    box-shadow: 0 0 18px rgba(79,92,255,0.45) !important;
+    transition: box-shadow 0.3s, transform 0.2s !important;
+  }
+  .nav-cta:hover {
+    box-shadow: 0 0 32px rgba(79,92,255,0.8) !important;
+    transform: translateY(-1px) !important;
+    background: linear-gradient(135deg, var(--accent-vivid), var(--violet)) !important;
+  }
+
+  /* ---- Dropdown panel ---- */
+  .nav-dropdown {
+    position: absolute; top: calc(100% + 12px); left: 50%;
+    transform: translateX(-50%) translateY(-6px);
+    background: rgba(22,26,64,0.98);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px; padding: 1.25rem;
+    min-width: 540px;
+    backdrop-filter: blur(24px);
+    box-shadow: 0 24px 64px rgba(0,0,0,0.45), 0 0 0 1px rgba(79,92,255,0.15);
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.22s ease, transform 0.22s ease;
+    display: grid; gap: 0.4rem;
+  }
+  .nav-dropdown.cols-2 { grid-template-columns: 1fr 1fr; }
+  .nav-dropdown.cols-3 { grid-template-columns: 1fr 1fr 1fr; min-width: 620px; }
+  .nav-links > li.open > .nav-dropdown {
+    opacity: 1; pointer-events: auto;
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Arrow above dropdown */
+  .nav-dropdown::before {
+    content: ''; position: absolute; top: -7px; left: 50%; transform: translateX(-50%);
+    width: 14px; height: 7px;
+    background: rgba(22,26,64,0.98);
+    clip-path: polygon(0 100%, 50% 0, 100% 100%);
+    border-left: 1px solid rgba(255,255,255,0.1);
+    border-right: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .drop-item {
+    display: flex; align-items: flex-start; gap: 0.85rem;
+    padding: 0.85rem 1rem; border-radius: 10px;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.18s;
+  }
+  .drop-item:hover { background: rgba(255,255,255,0.07); }
+  .drop-icon {
+    width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.2s;
+  }
+  .drop-item:hover .drop-icon { transform: scale(1.08); }
+  .drop-icon svg { width: 18px; height: 18px; stroke-width: 1.5; fill: none; }
+  .drop-icon-blue  { background: rgba(79,92,255,0.18); }
+  .drop-icon-blue  svg { stroke: var(--accent-bright); }
+  .drop-icon-violet{ background: rgba(155,89,255,0.18); }
+  .drop-icon-violet svg { stroke: #c084fc; }
+  .drop-icon-cyan  { background: rgba(0,212,255,0.15); }
+  .drop-icon-cyan  svg { stroke: var(--cyan); }
+  .drop-icon-green { background: rgba(0,245,160,0.12); }
+  .drop-icon-green svg { stroke: var(--green-neon); }
+  .drop-icon-orange{ background: rgba(255,107,53,0.15); }
+  .drop-icon-orange svg { stroke: #ff9a6b; }
+  .drop-icon-pink  { background: rgba(236,72,153,0.15); }
+  .drop-icon-pink  svg { stroke: #f472b6; }
+
+  .drop-title { font-size: 0.87rem; font-weight: 600; color: white; margin-bottom: 0.2rem; line-height: 1.2; }
+  .drop-desc  { font-size: 0.76rem; color: rgba(255,255,255,0.42); line-height: 1.4; }
+
+  .drop-divider {
+    grid-column: 1/-1; height: 1px;
+    background: rgba(255,255,255,0.07); margin: 0.3rem 0;
+  }
+  .drop-footer {
+    grid-column: 1/-1;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.75rem 1rem 0.25rem;
+  }
+  .drop-footer-text { font-size: 0.76rem; color: rgba(255,255,255,0.35); }
+  .drop-footer-link {
+    font-size: 0.78rem; font-weight: 600; color: var(--accent-bright);
+    text-decoration: none; display: flex; align-items: center; gap: 0.3rem;
+    transition: color 0.2s, gap 0.2s;
+  }
+  .drop-footer-link:hover { color: var(--cyan); gap: 0.5rem; }
+
+  /* Simple single-col dropdown (Pricing, About, etc) */
+  .nav-dropdown.cols-1 { grid-template-columns: 1fr; min-width: 220px; }
+
+  /* ---- Mobile hamburger ---- */
+  .nav-hamburger {
+    display: none; flex-direction: column; justify-content: center;
+    gap: 5px; width: 38px; height: 38px; background: none;
+    border: 1px solid rgba(255,255,255,0.15); border-radius: 8px;
+    cursor: pointer; padding: 8px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .nav-hamburger:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); }
+  .ham-bar {
+    display: block; height: 1.5px; background: white; border-radius: 2px;
+    transform-origin: center;
+    transition: transform 0.3s cubic-bezier(0.77,0,0.175,1), opacity 0.2s, width 0.3s;
+  }
+  .ham-bar:nth-child(3) { width: 65%; }
+  .nav-hamburger.open .ham-bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-hamburger.open .ham-bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
+  .nav-hamburger.open .ham-bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); width: 100%; }
+
+  /* Mobile drawer */
+  .nav-mobile {
+    position: fixed; top: 68px; left: 0; right: 0; bottom: 0;
+    background: rgba(20,24,60,0.98); backdrop-filter: blur(24px);
+    z-index: 199; overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.35s cubic-bezier(0.77,0,0.175,1);
+    padding: 1.5rem 1.5rem 3rem;
+  }
+  .nav-mobile.open { transform: translateX(0); }
+
+  .mob-section { margin-bottom: 1.5rem; }
+  .mob-section-label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: rgba(255,255,255,0.3);
+    padding: 0 0.5rem; margin-bottom: 0.5rem;
+  }
+  .mob-item {
+    display: flex; align-items: center; gap: 0.85rem;
+    padding: 0.85rem 1rem; border-radius: 12px;
+    text-decoration: none; color: rgba(255,255,255,0.8);
+    font-size: 0.92rem; font-weight: 500;
+    transition: background 0.18s, color 0.18s;
+  }
+  .mob-item:hover { background: rgba(255,255,255,0.07); color: white; }
+  .mob-item .drop-icon { width: 32px; height: 32px; }
+  .mob-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 0.75rem 0; }
+  .mob-cta {
+    display: block; text-align: center; margin-top: 1.5rem;
+    background: linear-gradient(135deg, var(--accent-vivid), var(--violet));
+    color: white; font-weight: 600; font-size: 1rem;
+    padding: 0.9rem; border-radius: 12px; text-decoration: none;
+    box-shadow: 0 0 24px rgba(79,92,255,0.5);
+  }
+
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .nav-hamburger { display: flex; }
+  }
+
+  /* ===================== HERO ===================== */
+  .hero {
+    min-height: 100vh; background: var(--navy-dark);
+    position: relative; display: flex; align-items: center;
+    overflow: hidden; padding-top: 68px;
+  }
+
+  /* Animated gradient mesh */
+  .hero-mesh {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 30%, rgba(79,92,255,0.28) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 10% 80%, rgba(155,89,255,0.2) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 40% at 90% 90%, rgba(0,212,255,0.12) 0%, transparent 50%);
+    animation: meshShift 12s ease-in-out infinite alternate;
+  }
+  @keyframes meshShift {
+    0%   { opacity: 1; transform: scale(1) rotate(0deg); }
+    50%  { opacity: 0.85; transform: scale(1.04) rotate(1deg); }
+    100% { opacity: 1; transform: scale(1.02) rotate(-0.5deg); }
+  }
+
+  /* Grid overlay */
+  .hero-grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+
+  /* Floating orbs */
+  .orb {
+    position: absolute; border-radius: 50%; pointer-events: none; filter: blur(1px);
+  }
+  .orb-1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(79,92,255,0.18) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    animation: orbFloat1 8s ease-in-out infinite;
+  }
+  .orb-2 {
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(155,89,255,0.15) 0%, transparent 70%);
+    bottom: -150px; left: -50px;
+    animation: orbFloat2 10s ease-in-out infinite;
+  }
+  .orb-3 {
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(0,212,255,0.2) 0%, transparent 70%);
+    top: 40%; right: 25%;
+    animation: orbFloat3 6s ease-in-out infinite;
+  }
+  @keyframes orbFloat1 { 0%,100%{transform:translate(0,0);} 50%{transform:translate(-30px,20px);} }
+  @keyframes orbFloat2 { 0%,100%{transform:translate(0,0);} 50%{transform:translate(20px,-30px);} }
+  @keyframes orbFloat3 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(10px,10px) scale(1.1);} }
+
+  /* Particles */
+  .particles { position: absolute; inset: 0; pointer-events: none; }
+  .particle {
+    position: absolute; border-radius: 50%;
+    background: rgba(255,255,255,0.6);
+    animation: particleDrift linear infinite;
+  }
+  @keyframes particleDrift {
+    0%   { transform: translateY(0) translateX(0); opacity: 0; }
+    10%  { opacity: 1; }
+    90%  { opacity: 0.6; }
+    100% { transform: translateY(-120px) translateX(30px); opacity: 0; }
+  }
+
+  .hero-inner {
+    max-width: 1200px; margin: 0 auto; width: 100%;
+    padding: 5rem 2rem 4rem;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 4rem; align-items: center;
+    position: relative; z-index: 2;
+  }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: rgba(79,92,255,0.15); border: 1px solid rgba(79,92,255,0.4);
+    color: #a0aaff; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 0.35rem 0.9rem; border-radius: 100px;
+    margin-bottom: 1.5rem;
+    animation: fadeSlideUp 0.7s 0.1s both;
+  }
+  .pulse-dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: var(--cyan); position: relative;
+  }
+  .pulse-dot::after {
+    content: ''; position: absolute; inset: -3px; border-radius: 50%;
+    border: 1.5px solid var(--cyan); opacity: 0;
+    animation: ripple 1.8s ease-out infinite;
+  }
+  @keyframes ripple {
+    0%   { transform: scale(1); opacity: 0.8; }
+    100% { transform: scale(2.5); opacity: 0; }
+  }
+
+  .hero-h1 {
+    font-family: var(--font-head);
+    font-size: clamp(2.6rem, 4.5vw, 4rem);
+    font-weight: 800; line-height: 1.1;
+    color: white; letter-spacing: -0.025em;
+    margin-bottom: 1.5rem;
+    animation: fadeSlideUp 0.7s 0.2s both;
+  }
+  .hero-h1 .line-grad {
+    background: linear-gradient(90deg, var(--cyan), var(--accent-bright), var(--violet));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    background-size: 200% 100%;
+    animation: gradShift 4s ease-in-out infinite alternate;
+  }
+  @keyframes gradShift {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
+
+  .hero-sub {
+    font-size: 1.05rem; line-height: 1.75; color: rgba(255,255,255,0.6);
+    max-width: 500px; margin-bottom: 2.5rem;
+    animation: fadeSlideUp 0.7s 0.3s both;
+  }
+
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap;
+    animation: fadeSlideUp 0.7s 0.4s both;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, var(--accent-vivid), var(--violet));
+    color: white; font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
+    padding: 0.85rem 1.9rem; border-radius: 10px; border: none;
+    text-decoration: none; cursor: pointer;
+    box-shadow: 0 0 24px rgba(79,92,255,0.5), 0 4px 16px rgba(0,0,0,0.3);
+    transition: box-shadow 0.3s, transform 0.2s;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .btn-primary:hover { box-shadow: 0 0 40px rgba(79,92,255,0.75), 0 8px 24px rgba(0,0,0,0.4); transform: translateY(-2px); }
+  .btn-primary:hover::before { opacity: 1; }
+
+  .btn-ghost {
+    background: transparent; color: rgba(255,255,255,0.8);
+    font-family: var(--font-body); font-size: 0.95rem; font-weight: 400;
+    padding: 0.85rem 1.9rem; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.2);
+    text-decoration: none; cursor: pointer;
+    transition: all 0.25s; display: inline-flex; align-items: center; gap: 0.5rem;
+    backdrop-filter: blur(4px);
+  }
+  .btn-ghost:hover { border-color: rgba(0,212,255,0.6); color: var(--cyan); box-shadow: 0 0 16px rgba(0,212,255,0.2); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.1);
+    animation: fadeSlideUp 0.7s 0.5s both;
+  }
+  .stat-num {
+    font-family: var(--font-head); font-size: 1.9rem; font-weight: 700;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, white, rgba(255,255,255,0.7));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .stat-label { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 0.2rem; letter-spacing: 0.02em; }
+
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* === Hero Visual Card === */
+  .hero-visual {
+    position: relative; display: flex; align-items: center; justify-content: center;
+    animation: fadeSlideUp 0.9s 0.5s both;
+  }
+  .device-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 22px; padding: 2rem;
+    width: 100%; max-width: 430px;
+    backdrop-filter: blur(20px);
+    position: relative;
+    box-shadow: 0 0 0 1px rgba(79,92,255,0.2), 0 24px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08);
+    animation: cardBreathe 4s ease-in-out infinite;
+  }
+  @keyframes cardBreathe {
+    0%,100% { box-shadow: 0 0 0 1px rgba(79,92,255,0.2), 0 24px 64px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.08); }
+    50%      { box-shadow: 0 0 0 1px rgba(79,92,255,0.4), 0 32px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.12); }
+  }
+  .device-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; }
+  .device-title {
+    font-family: var(--font-head); font-weight: 700; color: white;
+    font-size: 0.88rem; letter-spacing: 0.05em; text-transform: uppercase;
+  }
+  .status-badge {
+    background: rgba(0,245,160,0.12); border: 1px solid rgba(0,245,160,0.3);
+    color: var(--green-neon); font-size: 0.7rem; font-weight: 500;
+    padding: 0.2rem 0.65rem; border-radius: 100px;
+    display: flex; align-items: center; gap: 0.35rem;
+  }
+  .status-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--green-neon); animation: statusPulse 1.5s ease-in-out infinite; }
+  @keyframes statusPulse { 0%,100%{opacity:1; box-shadow: 0 0 0 0 rgba(0,245,160,0.4);} 50%{opacity:0.7; box-shadow: 0 0 0 4px rgba(0,245,160,0);} }
+
+  .metric-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-bottom: 1.25rem; }
+  .metric-box {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 12px; padding: 0.9rem;
+    transition: background 0.3s, border-color 0.3s;
+  }
+  .metric-box:hover { background: rgba(255,255,255,0.09); border-color: rgba(79,92,255,0.3); }
+  .metric-val {
+    font-family: var(--font-head); font-size: 1.4rem; font-weight: 700;
+    color: white; letter-spacing: -0.02em;
+  }
+  .metric-lbl { font-size: 0.7rem; color: rgba(255,255,255,0.4); margin-top: 0.2rem; }
+  .metric-bar { height: 3px; background: rgba(255,255,255,0.08); border-radius: 2px; margin-top: 0.6rem; overflow: hidden; }
+  .metric-bar-fill { height: 100%; border-radius: 2px; animation: barGrow 1.5s ease-out both; }
+  @keyframes barGrow { from{width:0 !important;} }
+
+  .threat-list { display: flex; flex-direction: column; gap: 0.45rem; }
+  .threat-row {
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 9px; padding: 0.55rem 0.8rem; font-size: 0.8rem;
+    transition: background 0.2s;
+    animation: threatSlide 0.5s ease both;
+  }
+  @keyframes threatSlide { from{opacity:0; transform:translateX(12px);} to{opacity:1; transform:translateX(0);} }
+  .threat-row:nth-child(1){ animation-delay:1.2s; }
+  .threat-row:nth-child(2){ animation-delay:1.5s; }
+  .threat-row:nth-child(3){ animation-delay:1.8s; }
+  .threat-row:hover { background: rgba(255,255,255,0.07); }
+  .threat-name { color: rgba(255,255,255,0.65); }
+  .tag-blocked {
+    background: rgba(0,245,160,0.12); color: var(--green-neon);
+    border: 1px solid rgba(0,245,160,0.25);
+    font-size: 0.68rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 5px;
+    letter-spacing: 0.05em;
+  }
+  .tag-warn {
+    background: rgba(255,107,53,0.12); color: #ff9a6b;
+    border: 1px solid rgba(255,107,53,0.25);
+    font-size: 0.68rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 5px;
+    letter-spacing: 0.05em;
+  }
+
+  .float-badge {
+    position: absolute; bottom: -1.5rem; left: -2rem;
+    background: rgba(26,31,74,0.95);
+    border: 1px solid rgba(79,92,255,0.35);
+    border-radius: 14px; padding: 0.75rem 1.1rem;
+    display: flex; align-items: center; gap: 0.7rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(79,92,255,0.15);
+    animation: floatBadge 3s ease-in-out infinite;
+  }
+  @keyframes floatBadge { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-5px);} }
+  .float-icon {
+    width: 34px; height: 34px; border-radius: 9px;
+    background: linear-gradient(135deg, rgba(79,92,255,0.3), rgba(155,89,255,0.2));
+    border: 1px solid rgba(79,92,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .float-text-main { font-size: 0.82rem; font-weight: 600; color: white; }
+  .float-text-sub { font-size: 0.7rem; color: rgba(255,255,255,0.4); }
+
+  /* corner accent */
+  .corner-accent {
+    position: absolute; top: -2rem; right: -2rem;
+    width: 80px; height: 80px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,212,255,0.3), transparent 70%);
+    animation: orbFloat3 5s ease-in-out infinite;
+  }
+
+  /* ===================== TRUST BAR ===================== */
+  .trust-bar {
+    background: linear-gradient(180deg, #f5f6fc 0%, #ffffff 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 1.75rem 2rem;
+    position: relative; overflow: hidden;
+  }
+  .trust-bar::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-vivid), var(--violet), var(--cyan), transparent);
+    opacity: 0.6;
+  }
+  .trust-inner {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+  }
+  .trust-label {
+    font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.1em; white-space: nowrap;
+  }
+  .trust-divider { width: 1px; height: 24px; background: var(--border); }
+  .trust-logos { display: flex; align-items: center; gap: 2.5rem; flex-wrap: wrap; }
+  .trust-logo-pill {
+    font-family: var(--font-head); font-weight: 700; font-size: 0.92rem;
+    color: #b0b4cc; letter-spacing: -0.01em;
+    transition: color 0.25s, transform 0.25s;
+    cursor: default;
+  }
+  .trust-logo-pill:hover { color: var(--navy); transform: translateY(-1px); }
+
+  /* ===================== SHARED SECTION ===================== */
+  section { padding: 6rem 2rem; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-tag {
+    display: inline-block; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--accent-vivid); margin-bottom: 0.75rem;
+    position: relative;
+  }
+  .section-tag::before {
+    content: ''; display: inline-block; width: 16px; height: 2px;
+    background: linear-gradient(90deg, var(--accent-vivid), var(--violet));
+    vertical-align: middle; margin-right: 0.5rem; border-radius: 2px;
+  }
+  .section-h2 {
+    font-family: var(--font-head); font-size: clamp(1.9rem, 3vw, 2.75rem);
+    font-weight: 800; color: var(--navy); letter-spacing: -0.02em;
+    line-height: 1.15; margin-bottom: 1rem;
+  }
+  .section-sub { font-size: 1.05rem; color: var(--text-muted); line-height: 1.75; max-width: 560px; }
+  .section-head { margin-bottom: 3.5rem; }
+
+  /* Scroll reveal */
+  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ===================== PRODUCTS ===================== */
+  .products-bg { background: white; }
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .prod-card {
+    border: 1px solid var(--border); border-radius: 18px; padding: 2rem;
+    background: white; position: relative; overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s, border-color 0.3s;
+  }
+  .prod-card::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent-vivid), var(--violet));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .prod-card:hover { transform: translateY(-6px); box-shadow: 0 20px 60px rgba(44,51,112,0.13); border-color: rgba(79,92,255,0.3); }
+  .prod-card:hover::after { opacity: 1; }
+
+  .prod-icon {
+    width: 54px; height: 54px; border-radius: 14px; margin-bottom: 1.5rem;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.3s;
+  }
+  .prod-card:hover .prod-icon { transform: scale(1.1) rotate(-3deg); }
+  .prod-icon svg { width: 24px; height: 24px; stroke-width: 1.5; fill: none; }
+
+  .prod-icon-ngfw { background: linear-gradient(135deg, #eef0ff, #dde1ff); }
+  .prod-icon-ngfw svg { stroke: var(--accent-vivid); }
+  .prod-icon-wan  { background: linear-gradient(135deg, #f0eaff, #e2d4ff); }
+  .prod-icon-wan svg { stroke: var(--violet); }
+  .prod-icon-hot  { background: linear-gradient(135deg, #e6faff, #c8f4ff); }
+  .prod-icon-hot svg { stroke: #0097b8; }
+
+  .prod-name { font-family: var(--font-head); font-size: 1.1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+  .prod-desc { font-size: 0.88rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.5rem; }
+  .prod-features { list-style: none; display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.75rem; }
+  .prod-features li {
+    font-size: 0.83rem; color: var(--text-body);
+    display: flex; align-items: center; gap: 0.55rem;
+  }
+  .prod-features li::before {
+    content: ''; display: block; width: 6px; height: 6px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent-vivid), var(--violet)); flex-shrink: 0;
+  }
+  .prod-link {
+    font-size: 0.85rem; font-weight: 600; color: var(--accent-vivid);
+    text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem;
+    transition: gap 0.2s, color 0.2s;
+  }
+  .prod-link:hover { gap: 0.7rem; color: var(--violet); }
+
+  .prod-card.featured {
+    background: linear-gradient(145deg, var(--navy-dark) 0%, var(--navy-mid) 100%);
+    border-color: rgba(79,92,255,0.35);
+    box-shadow: 0 0 0 1px rgba(79,92,255,0.2), 0 8px 32px rgba(26,31,74,0.3);
+  }
+  .prod-card.featured::after { background: linear-gradient(90deg, var(--cyan), var(--accent-bright)); opacity: 1; }
+  .prod-card.featured:hover { transform: translateY(-6px); box-shadow: 0 0 0 1px rgba(79,92,255,0.4), 0 24px 60px rgba(26,31,74,0.5); }
+  .prod-card.featured .prod-icon-ngfw { background: rgba(79,92,255,0.18); }
+  .prod-card.featured .prod-icon-ngfw svg { stroke: var(--accent-bright); }
+  .prod-card.featured .prod-name { color: white; }
+  .prod-card.featured .prod-desc { color: rgba(255,255,255,0.55); }
+  .prod-card.featured .prod-features li { color: rgba(255,255,255,0.8); }
+  .prod-card.featured .prod-link { color: var(--cyan); }
+  .prod-card.featured .prod-link:hover { color: var(--accent-bright); }
+
+  /* ===================== VALUE PROPS ===================== */
+  .value-bg {
+    background: linear-gradient(160deg, #f4f5fc 0%, #eaecf8 50%, #f4f5fc 100%);
+    position: relative; overflow: hidden;
+  }
+  .value-bg::before {
+    content: ''; position: absolute; top: -200px; right: -200px;
+    width: 500px; height: 500px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(79,92,255,0.07), transparent 70%);
+    pointer-events: none;
+  }
+  .value-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5rem; }
+  .val-card {
+    background: white; border-radius: 16px; padding: 1.75rem;
+    border: 1px solid var(--border);
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s, border-color 0.3s;
+  }
+  .val-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(44,51,112,0.1); border-color: rgba(79,92,255,0.25); }
+  .val-icon {
+    width: 46px; height: 46px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;
+    transition: transform 0.3s;
+  }
+  .val-card:hover .val-icon { transform: scale(1.12) rotate(-5deg); }
+  .val-icon svg { width: 22px; height: 22px; stroke-width: 1.5; fill: none; }
+  .val-i1 { background: linear-gradient(135deg, #eef0ff, #dde1ff); }
+  .val-i1 svg { stroke: var(--accent-vivid); }
+  .val-i2 { background: linear-gradient(135deg, #fff5ee, #ffe4d1); }
+  .val-i2 svg { stroke: var(--orange); }
+  .val-i3 { background: linear-gradient(135deg, #f0eaff, #e2d4ff); }
+  .val-i3 svg { stroke: var(--violet); }
+  .val-i4 { background: linear-gradient(135deg, #e6faff, #c8f4ff); }
+  .val-i4 svg { stroke: #0097b8; }
+  .val-title { font-family: var(--font-head); font-size: 0.98rem; font-weight: 700; color: var(--navy); margin-bottom: 0.5rem; }
+  .val-text { font-size: 0.85rem; color: var(--text-muted); line-height: 1.65; }
+
+  /* ===================== SOLUTIONS ===================== */
+  .solutions-bg { background: white; }
+  .solutions-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .solutions-tabs { display: flex; flex-direction: column; gap: 0.75rem; }
+  .sol-tab {
+    border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem 1.5rem;
+    cursor: pointer; transition: all 0.25s; text-align: left; background: white;
+    display: flex; align-items: flex-start; gap: 1rem;
+  }
+  .sol-tab:hover:not(.active) { border-color: rgba(79,92,255,0.3); background: #f9f9ff; }
+  .sol-tab.active { border-color: var(--accent-vivid); background: linear-gradient(135deg, #f4f5ff, #ece8ff); box-shadow: 0 4px 20px rgba(79,92,255,0.12); }
+  .sol-tab-icon {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    background: var(--navy-faint); display: flex; align-items: center; justify-content: center;
+    transition: all 0.25s;
+  }
+  .sol-tab.active .sol-tab-icon { background: linear-gradient(135deg, var(--accent-vivid), var(--violet)); box-shadow: 0 4px 12px rgba(79,92,255,0.4); }
+  .sol-tab-icon svg { width: 18px; height: 18px; stroke: var(--navy); fill: none; stroke-width: 1.5; transition: stroke 0.25s; }
+  .sol-tab.active .sol-tab-icon svg { stroke: white; }
+  .sol-tab-name { font-family: var(--font-head); font-size: 0.92rem; font-weight: 700; color: var(--navy); }
+  .sol-tab.active .sol-tab-name { color: var(--accent-vivid); }
+  .sol-tab-desc { font-size: 0.82rem; color: var(--text-muted); margin-top: 0.25rem; line-height: 1.5; }
+  .sol-panel {
+    background: linear-gradient(145deg, #f7f8ff, #ede8ff);
+    border-radius: 22px; padding: 2.5rem;
+    border: 1px solid rgba(79,92,255,0.15);
+    box-shadow: 0 8px 40px rgba(44,51,112,0.08);
+    transition: all 0.3s ease;
+  }
+  .sol-panel-tag { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent-vivid); margin-bottom: 0.75rem; }
+  .sol-panel-h3 { font-family: var(--font-head); font-size: 1.45rem; font-weight: 800; color: var(--navy); margin-bottom: 0.75rem; letter-spacing: -0.015em; }
+  .sol-panel-text { font-size: 0.9rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.5rem; }
+  .sol-feature-list { display: flex; flex-direction: column; gap: 0.65rem; margin-bottom: 2rem; }
+  .sol-feature-item { display: flex; align-items: center; gap: 0.65rem; font-size: 0.87rem; color: var(--text-body); }
+  .sol-check {
+    width: 22px; height: 22px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--accent-vivid), var(--violet));
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(79,92,255,0.35);
+  }
+  .sol-check svg { width: 11px; height: 11px; stroke: white; fill: none; stroke-width: 2.5; }
+
+  /* ===================== PERSONAS (dark) ===================== */
+  .personas-bg {
+    background: linear-gradient(160deg, var(--navy-dark) 0%, var(--navy-mid) 60%, #2d1f5e 100%);
+    position: relative; overflow: hidden;
+  }
+  .personas-bg::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .personas-bg .section-h2 { color: white; }
+  .personas-bg .section-sub { color: rgba(255,255,255,0.5); }
+  .personas-bg .section-tag { color: var(--cyan); }
+  .personas-bg .section-tag::before { background: linear-gradient(90deg, var(--cyan), var(--accent-bright)); }
+  .persona-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  .persona-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px; padding: 1.75rem;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    position: relative; overflow: hidden;
+  }
+  .persona-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .persona-card:nth-child(1)::before { background: linear-gradient(90deg, var(--accent-vivid), var(--cyan)); }
+  .persona-card:nth-child(2)::before { background: linear-gradient(90deg, var(--violet), var(--accent-bright)); }
+  .persona-card:nth-child(3)::before { background: linear-gradient(90deg, var(--cyan), var(--green-neon)); }
+  .persona-card:nth-child(4)::before { background: linear-gradient(90deg, var(--orange), #ffbc00); }
+  .persona-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); transform: translateY(-5px); }
+  .persona-card:hover::before { opacity: 1; }
+  .persona-avatar {
+    width: 50px; height: 50px; border-radius: 50%; margin-bottom: 1.25rem;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-head); font-weight: 800; color: white; font-size: 0.95rem;
+  }
+  .persona-card:nth-child(1) .persona-avatar { background: linear-gradient(135deg, var(--accent-vivid), var(--cyan)); }
+  .persona-card:nth-child(2) .persona-avatar { background: linear-gradient(135deg, var(--violet), var(--accent-bright)); }
+  .persona-card:nth-child(3) .persona-avatar { background: linear-gradient(135deg, var(--cyan), var(--green-neon)); }
+  .persona-card:nth-child(4) .persona-avatar { background: linear-gradient(135deg, var(--orange), #ffbc00); }
+  .persona-name { font-family: var(--font-head); font-size: 1rem; font-weight: 700; color: white; margin-bottom: 0.2rem; }
+  .persona-role { font-size: 0.75rem; color: rgba(255,255,255,0.38); margin-bottom: 0.75rem; text-transform: uppercase; letter-spacing: 0.07em; }
+  .persona-need { font-size: 0.84rem; color: rgba(255,255,255,0.6); line-height: 1.65; margin-bottom: 1.25rem; }
+  .persona-journey { display: flex; flex-direction: column; gap: 0.38rem; }
+  .journey-step { display: flex; align-items: center; gap: 0.55rem; font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+  .step-dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+  .persona-card:nth-child(1) .step-dot { background: var(--cyan); }
+  .persona-card:nth-child(2) .step-dot { background: var(--accent-bright); }
+  .persona-card:nth-child(3) .step-dot { background: var(--green-neon); }
+  .persona-card:nth-child(4) .step-dot { background: #ffbc00; }
+
+  /* ===================== TESTIMONIALS ===================== */
+  .testi-bg {
+    background: linear-gradient(180deg, #f7f8ff 0%, #f0f1fa 100%);
+    position: relative;
+  }
+  .testi-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .testi-card {
+    background: white; border: 1px solid var(--border); border-radius: 18px; padding: 2rem;
+    display: flex; flex-direction: column;
+    transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s, border-color 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .testi-card::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent-vivid), var(--violet));
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .testi-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(44,51,112,0.1); border-color: rgba(79,92,255,0.25); }
+  .testi-card:hover::before { opacity: 1; }
+  .testi-stars { display: flex; gap: 3px; margin-bottom: 0.75rem; }
+  .star { font-size: 0.9rem; }
+  .testi-quote-mark {
+    font-family: var(--font-head); font-size: 3.5rem; line-height: 1;
+    background: linear-gradient(135deg, var(--accent-vivid), var(--violet));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 0.25rem; font-weight: 800;
+  }
+  .testi-text { font-size: 0.91rem; color: var(--text-body); line-height: 1.75; flex: 1; margin-bottom: 1.5rem; }
+  .testi-author { display: flex; align-items: center; gap: 0.75rem; }
+  .testi-avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-head); font-weight: 800; color: white; font-size: 0.82rem;
+  }
+  .testi-card:nth-child(1) .testi-avatar { background: linear-gradient(135deg, var(--accent-vivid), var(--violet)); }
+  .testi-card:nth-child(2) .testi-avatar { background: linear-gradient(135deg, #0097b8, var(--cyan)); }
+  .testi-card:nth-child(3) .testi-avatar { background: linear-gradient(135deg, var(--orange), #ffbc00); }
+  .testi-name { font-weight: 600; font-size: 0.88rem; color: var(--navy); }
+  .testi-org { font-size: 0.76rem; color: var(--text-muted); }
+
+  /* ===================== CTA ===================== */
+  .cta-section {
+    background: linear-gradient(145deg, var(--navy-dark) 0%, var(--navy-mid) 50%, #2d1f5e 100%);
+    padding: 7rem 2rem; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size: 64px 64px;
+  }
+  .cta-orb1 {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+    width: 700px; height: 400px; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(ellipse, rgba(79,92,255,0.25) 0%, transparent 65%);
+    animation: orbFloat1 8s ease-in-out infinite;
+  }
+  .cta-orb2 {
+    position: absolute; bottom: -100px; right: -100px;
+    width: 400px; height: 400px; border-radius: 50%; pointer-events: none;
+    background: radial-gradient(circle, rgba(155,89,255,0.2) 0%, transparent 70%);
+    animation: orbFloat2 6s ease-in-out infinite;
+  }
+  .cta-inner {
+    max-width: 680px; margin: 0 auto; text-align: center;
+    position: relative; z-index: 2;
+  }
+  .cta-inner .section-h2 { color: white; }
+  .cta-inner .section-sub { color: rgba(255,255,255,0.55); margin: 0 auto 2.5rem; }
+  .cta-inner .section-tag { color: var(--cyan); }
+  .cta-inner .section-tag::before { background: linear-gradient(90deg, var(--cyan), var(--accent-bright)); }
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* ===================== FOOTER ===================== */
+  footer {
+    background: var(--navy-dark);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 4rem 2rem 2rem;
+    position: relative;
+  }
+  footer::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(79,92,255,0.5), rgba(155,89,255,0.5), transparent);
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+  .footer-logo {
+    font-family: var(--font-head); font-size: 1.2rem; font-weight: 800;
+    color: white; margin-bottom: 1rem; display: flex; align-items: center; gap: 0.55rem;
+  }
+  .footer-about { font-size: 0.85rem; color: rgba(255,255,255,0.4); line-height: 1.75; max-width: 280px; }
+  .footer-col-title {
+    font-family: var(--font-head); font-weight: 700; font-size: 0.82rem;
+    letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.25rem;
+    background: linear-gradient(90deg, var(--accent-bright), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.7rem; }
+  .footer-links a { font-size: 0.85rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s, padding-left 0.2s; }
+  .footer-links a:hover { color: rgba(255,255,255,0.9); padding-left: 4px; }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.75rem;
+    display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-copy { font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+  .footer-badges { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .badge-pill {
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 100px; padding: 0.25rem 0.75rem;
+    font-size: 0.7rem; color: rgba(255,255,255,0.4);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .badge-pill:hover { border-color: rgba(79,92,255,0.4); color: var(--accent-bright); }
+
+  /* ===================== RESPONSIVE ===================== */
+  @media (max-width: 1024px) {
+    .products-grid { grid-template-columns: 1fr 1fr; }
+    .value-grid { grid-template-columns: 1fr 1fr; }
+    .persona-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .hero-visual { display: none; }
+    .products-grid { grid-template-columns: 1fr; }
+    .solutions-layout { grid-template-columns: 1fr; }
+    .testi-grid { grid-template-columns: 1fr; }
+    .persona-grid { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .nav-links { display: none; }
+  }
+  /* ===================== TOAST ===================== */
+  .toast {
+    position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px);
+    z-index: 999;
+    background: rgba(26,31,74,0.97); border: 1px solid rgba(79,92,255,0.4);
+    color: white; font-family: var(--font-body); font-size: 0.9rem; font-weight: 500;
+    padding: 0.75rem 1.5rem; border-radius: 100px;
+    backdrop-filter: blur(16px);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), 0 0 0 1px rgba(79,92,255,0.2);
+    display: flex; align-items: center; gap: 0.6rem;
+    transition: transform 0.35s cubic-bezier(0.34,1.56,0.64,1), opacity 0.35s;
+    opacity: 0; pointer-events: none;
+    white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+  .toast-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-bright); flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="mainNav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" onclick="scrollTo({top:0,behavior:'smooth'});return false;">
+      <div class="logo-mark">
+        <svg viewBox="0 0 18 18" fill="none">
+          <path d="M9 2a7 7 0 0 1 0 14A7 7 0 0 1 9 2z" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+          <path d="M4 9c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+          <circle cx="9" cy="9" r="2" fill="white"/>
+        </svg>
+      </div>
+      Byte<span class="logo-accent">screen</span>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+
+      <!-- Products -->
+      <li id="drop-products">
+        <a href="#products" onclick="navScrollTo('#products');return false;">
+          Products
+          <svg class="nav-chevron" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dropdown cols-2">
+          <a class="drop-item" href="#products" onclick="navScrollTo('#products');return false;">
+            <div class="drop-icon drop-icon-blue"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h.01M10 14h.01M14 14h.01"/></svg></div>
+            <div><div class="drop-title">BT-Firewall (NGFW)</div><div class="drop-desc">AI-powered next-gen firewall with deep packet inspection</div></div>
+          </a>
+          <a class="drop-item" href="#products" onclick="navScrollTo('#products');return false;">
+            <div class="drop-icon drop-icon-violet"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg></div>
+            <div><div class="drop-title">BT-WAN (SD-WAN)</div><div class="drop-desc">Software-defined WAN with intelligent path selection</div></div>
+          </a>
+          <a class="drop-item" href="#products" onclick="navScrollTo('#products');return false;">
+            <div class="drop-icon drop-icon-cyan"><svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="#00d4ff"/></svg></div>
+            <div><div class="drop-title">BT-Hotspot (AAA)</div><div class="drop-desc">Full-featured RADIUS/AAA hotspot controller</div></div>
+          </a>
+          <a class="drop-item" href="#products" onclick="navScrollTo('#products');return false;">
+            <div class="drop-icon drop-icon-green"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+            <div><div class="drop-title">Network Management</div><div class="drop-desc">Unified visibility across all devices and sites</div></div>
+          </a>
+          <div class="drop-divider"></div>
+          <div class="drop-footer">
+            <span class="drop-footer-text">All hardware &amp; software products</span>
+            <a class="drop-footer-link" href="#products" onclick="navScrollTo('#products');return false;">View all products →</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Solutions -->
+      <li id="drop-solutions">
+        <a href="#solutions" onclick="navScrollTo('#solutions');return false;">
+          Solutions
+          <svg class="nav-chevron" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dropdown cols-3">
+          <a class="drop-item" href="#solutions" onclick="navScrollTo('#solutions');return false;">
+            <div class="drop-icon drop-icon-pink"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+            <div><div class="drop-title">Healthcare</div><div class="drop-desc">HIPAA-compliant networks</div></div>
+          </a>
+          <a class="drop-item" href="#solutions" onclick="navScrollTo('#solutions');return false;">
+            <div class="drop-icon drop-icon-orange"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+            <div><div class="drop-title">Retail &amp; Branch</div><div class="drop-desc">Multi-site SD-WAN &amp; POS security</div></div>
+          </a>
+          <a class="drop-item" href="#solutions" onclick="navScrollTo('#solutions');return false;">
+            <div class="drop-icon drop-icon-blue"><svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div>
+            <div><div class="drop-title">Education</div><div class="drop-desc">Campus Wi-Fi &amp; content filtering</div></div>
+          </a>
+          <a class="drop-item" href="#solutions" onclick="navScrollTo('#solutions');return false;">
+            <div class="drop-icon drop-icon-green"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+            <div><div class="drop-title">Financial Services</div><div class="drop-desc">PCI-DSS &amp; zero-trust access</div></div>
+          </a>
+          <a class="drop-item" href="#solutions" onclick="navScrollTo('#solutions');return false;">
+            <div class="drop-icon drop-icon-violet"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+            <div><div class="drop-title">Cloud Security</div><div class="drop-desc">SASE &amp; zero-trust cloud access</div></div>
+          </a>
+          <a class="drop-item" href="#solutions" onclick="navScrollTo('#solutions');return false;">
+            <div class="drop-icon drop-icon-cyan"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg></div>
+            <div><div class="drop-title">MSP / Partners</div><div class="drop-desc">White-label &amp; reseller program</div></div>
+          </a>
+          <div class="drop-divider"></div>
+          <div class="drop-footer">
+            <span class="drop-footer-text">Solutions by industry &amp; use case</span>
+            <a class="drop-footer-link" href="#solutions" onclick="navScrollTo('#solutions');return false;">Explore all solutions →</a>
+          </div>
+        </div>
+      </li>
+
+      <!-- Resources -->
+      <li id="drop-resources">
+        <a href="#" onclick="return false;">
+          Resources
+          <svg class="nav-chevron" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dropdown cols-2">
+          <a class="drop-item" href="#" onclick="showToast('Resources — Whitepapers &amp; E-books');return false;">
+            <div class="drop-icon drop-icon-blue"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+            <div><div class="drop-title">Whitepapers</div><div class="drop-desc">In-depth technical guides &amp; research</div></div>
+          </a>
+          <a class="drop-item" href="#" onclick="showToast('Resources — Blog &amp; Articles');return false;">
+            <div class="drop-icon drop-icon-violet"><svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></div>
+            <div><div class="drop-title">Blog</div><div class="drop-desc">Security insights &amp; product updates</div></div>
+          </a>
+          <a class="drop-item" href="#" onclick="showToast('Resources — Datasheets');return false;">
+            <div class="drop-icon drop-icon-cyan"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
+            <div><div class="drop-title">Datasheets</div><div class="drop-desc">Product specs &amp; comparison sheets</div></div>
+          </a>
+          <a class="drop-item" href="#" onclick="showToast('Resources — Webinars &amp; Events');return false;">
+            <div class="drop-icon drop-icon-orange"><svg viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></div>
+            <div><div class="drop-title">Webinars &amp; Events</div><div class="drop-desc">Live demos &amp; on-demand sessions</div></div>
+          </a>
+        </div>
+      </li>
+
+      <!-- Pricing -->
+      <li>
+        <a href="#" onclick="showToast('Pricing page — coming soon in next build!');return false;">Pricing</a>
+      </li>
+
+      <!-- About -->
+      <li id="drop-about">
+        <a href="#" onclick="return false;">
+          About
+          <svg class="nav-chevron" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <div class="nav-dropdown cols-1" style="min-width:200px;">
+          <a class="drop-item" href="#" onclick="showToast('About — Our Story');return false;">
+            <div class="drop-icon drop-icon-blue"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+            <div><div class="drop-title">Our Story</div><div class="drop-desc">Mission, vision &amp; team</div></div>
+          </a>
+          <a class="drop-item" href="#" onclick="showToast('About — Careers');return false;">
+            <div class="drop-icon drop-icon-green"><svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></div>
+            <div><div class="drop-title">Careers</div><div class="drop-desc">Join the Bytescreen team</div></div>
+          </a>
+          <a class="drop-item" href="#" onclick="showToast('About — News &amp; Press');return false;">
+            <div class="drop-icon drop-icon-violet"><svg viewBox="0 0 24 24"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 0-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8M15 18h-5M10 6h8v4h-8z"/></svg></div>
+            <div><div class="drop-title">News &amp; Press</div><div class="drop-desc">Latest announcements</div></div>
+          </a>
+        </div>
+      </li>
+
+      <!-- CTA -->
+      <li>
+        <a href="#contact" class="nav-cta" onclick="navScrollTo('#contact');return false;">Request Demo</a>
+      </li>
+    </ul>
+
+    <!-- Hamburger -->
+    <button class="nav-hamburger" id="navHam" aria-label="Open menu" aria-expanded="false">
+      <span class="ham-bar"></span>
+      <span class="ham-bar"></span>
+      <span class="ham-bar"></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile drawer -->
+<div class="nav-mobile" id="navMobile">
+  <div class="mob-section">
+    <div class="mob-section-label">Products</div>
+    <a class="mob-item" href="#products" onclick="closeMobile();navScrollTo('#products');">
+      <div class="drop-icon drop-icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg></div>BT-Firewall (NGFW)
+    </a>
+    <a class="mob-item" href="#products" onclick="closeMobile();navScrollTo('#products');">
+      <div class="drop-icon drop-icon-violet"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg></div>BT-WAN (SD-WAN)
+    </a>
+    <a class="mob-item" href="#products" onclick="closeMobile();navScrollTo('#products');">
+      <div class="drop-icon drop-icon-cyan"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/></svg></div>BT-Hotspot (AAA)
+    </a>
+  </div>
+  <div class="mob-divider"></div>
+  <div class="mob-section">
+    <div class="mob-section-label">Solutions</div>
+    <a class="mob-item" href="#solutions" onclick="closeMobile();navScrollTo('#solutions');">
+      <div class="drop-icon drop-icon-pink"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l8.84 8.84 8.84-8.84a5.5 5.5 0 0 0 0-7.78z"/></svg></div>Healthcare
+    </a>
+    <a class="mob-item" href="#solutions" onclick="closeMobile();navScrollTo('#solutions');">
+      <div class="drop-icon drop-icon-orange"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>Retail &amp; Branch
+    </a>
+    <a class="mob-item" href="#solutions" onclick="closeMobile();navScrollTo('#solutions');">
+      <div class="drop-icon drop-icon-blue"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/></svg></div>Education
+    </a>
+    <a class="mob-item" href="#solutions" onclick="closeMobile();navScrollTo('#solutions');">
+      <div class="drop-icon drop-icon-green"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Financial Services
+    </a>
+  </div>
+  <div class="mob-divider"></div>
+  <div class="mob-section">
+    <div class="mob-section-label">Company</div>
+    <a class="mob-item" href="#" onclick="showToast('Pricing — coming soon!');closeMobile();">
+      <div class="drop-icon drop-icon-violet"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>Pricing
+    </a>
+    <a class="mob-item" href="#" onclick="showToast('About page — coming soon!');closeMobile();">
+      <div class="drop-icon drop-icon-cyan"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/></svg></div>About
+    </a>
+  </div>
+  <a class="mob-cta" href="#contact" onclick="closeMobile();navScrollTo('#contact');">Request a Demo →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-mesh"></div>
+  <div class="hero-grid"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <div class="particles" id="particles"></div>
+
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="pulse-dot"></span>
+        AI-Powered Network Security
+      </div>
+      <h1 class="hero-h1">
+        Secure, Connect,<br>
+        <span class="line-grad">Succeed.</span>
+      </h1>
+      <p class="hero-sub">
+        Enterprise-grade next-gen firewalls, secure SD-WAN, and AAA hotspot management — built for the modern network. Protect every edge without compromising performance.
+      </p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">
+          Request a Demo
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#products" class="btn-ghost">
+          Explore Products
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num" data-count="99.9" data-suffix="%">0%</div>
+          <div class="stat-label">Uptime SLA</div>
+        </div>
+        <div>
+          <div class="stat-num">40 Gbps</div>
+          <div class="stat-label">Max throughput</div>
+        </div>
+        <div>
+          <div class="stat-num" data-count="24" data-suffix="/7">0</div>
+          <div class="stat-label">Support coverage</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="corner-accent"></div>
+      <div class="device-card">
+        <div class="device-header">
+          <div class="device-title">BT-Firewall · Live</div>
+          <div class="status-badge"><span class="status-dot"></span> Protected</div>
+        </div>
+        <div class="metric-grid">
+          <div class="metric-box">
+            <div class="metric-val" id="mPkts">1.2M</div>
+            <div class="metric-lbl">Packets/sec</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="b1" style="width:78%;background:linear-gradient(90deg,#4f5cff,#9b59ff)"></div></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val" id="mLat">0.8ms</div>
+            <div class="metric-lbl">Avg latency</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="b2" style="width:30%;background:linear-gradient(90deg,#00f5a0,#00d4ff)"></div></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val" id="mThreats">847</div>
+            <div class="metric-lbl">Threats blocked</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="b3" style="width:91%;background:linear-gradient(90deg,#9b59ff,#4f5cff)"></div></div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-val" id="mTraffic">38.4 Gb</div>
+            <div class="metric-lbl">Traffic today</div>
+            <div class="metric-bar"><div class="metric-bar-fill" id="b4" style="width:55%;background:linear-gradient(90deg,#ff6b35,#ffbc00)"></div></div>
+          </div>
+        </div>
+        <div class="threat-list">
+          <div class="threat-row">
+            <span class="threat-name">DDoS Attempt · 192.168.0.x</span>
+            <span class="tag-blocked">BLOCKED</span>
+          </div>
+          <div class="threat-row">
+            <span class="threat-name">SQL Injection · /api/v2</span>
+            <span class="tag-blocked">BLOCKED</span>
+          </div>
+          <div class="threat-row">
+            <span class="threat-name">Port Scan · 10.0.1.44</span>
+            <span class="tag-warn">MONITORED</span>
+          </div>
+        </div>
+        <div class="float-badge">
+          <div class="float-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+              <path d="M9 1.5l2.1 4.3 4.7.7-3.4 3.3.8 4.7L9 12l-4.2 2.5.8-4.7-3.4-3.3 4.7-.7L9 1.5z" fill="url(#sg)"/>
+              <defs><linearGradient id="sg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4f5cff"/><stop offset="1" stop-color="#9b59ff"/></linearGradient></defs>
+            </svg>
+          </div>
+          <div>
+            <div class="float-text-main">AI Threat Intelligence</div>
+            <div class="float-text-sub">Real-time protection active</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-inner">
+    <span class="trust-label">Trusted by</span>
+    <div class="trust-divider"></div>
+    <div class="trust-logos">
+      <span class="trust-logo-pill">RetailCorp</span>
+      <span class="trust-logo-pill">HealthNet</span>
+      <span class="trust-logo-pill">EduGroup</span>
+      <span class="trust-logo-pill">FinServ Pro</span>
+      <span class="trust-logo-pill">CloudBase</span>
+      <span class="trust-logo-pill">MetroISP</span>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="products-bg" id="products">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-tag">Product Suite</div>
+      <h2 class="section-h2">Built for every network edge</h2>
+      <p class="section-sub">From branch offices to cloud deployments, Bytescreen's product lineup covers the full security stack.</p>
+    </div>
+    <div class="products-grid">
+      <div class="prod-card featured reveal reveal-delay-1">
+        <div class="prod-icon prod-icon-ngfw">
+          <svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20M6 14h.01M10 14h.01M14 14h.01M18 14h.01"/></svg>
+        </div>
+        <div class="prod-name">BT-Firewall (NGFW)</div>
+        <div class="prod-desc">Next-generation firewall with stateful inspection, AI threat detection, and deep packet inspection. Zero-downtime deployment.</div>
+        <ul class="prod-features">
+          <li>AI-powered threat detection &amp; IPS</li>
+          <li>SSL/TLS inspection at full speed</li>
+          <li>Integrated SD-WAN &amp; VPN</li>
+          <li>Up to 40 Gbps throughput</li>
+        </ul>
+        <a href="/products/ngfw" class="prod-link">Learn more →</a>
+      </div>
+      <div class="prod-card reveal reveal-delay-2">
+        <div class="prod-icon prod-icon-wan">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.93 4.93l2.12 2.12M16.95 16.95l2.12 2.12M4.93 19.07l2.12-2.12M16.95 7.05l2.12-2.12"/></svg>
+        </div>
+        <div class="prod-name">BT-WAN (SD-WAN)</div>
+        <div class="prod-desc">Software-defined WAN that intelligently routes traffic across MPLS, broadband, and LTE for application performance and resilience.</div>
+        <ul class="prod-features">
+          <li>Application-aware path selection</li>
+          <li>Zero-touch provisioning</li>
+          <li>Unified policy management</li>
+          <li>Built-in failover &amp; redundancy</li>
+        </ul>
+        <a href="/products/sd-wan" class="prod-link">Learn more →</a>
+      </div>
+      <div class="prod-card reveal reveal-delay-3">
+        <div class="prod-icon prod-icon-hot">
+          <svg viewBox="0 0 24 24"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="#0097b8"/></svg>
+        </div>
+        <div class="prod-name">BT-Hotspot (AAA)</div>
+        <div class="prod-desc">Full-featured AAA hotspot controller for public Wi-Fi, guest networks, and MSPs — captive portal, billing, and multi-tenant management.</div>
+        <ul class="prod-features">
+          <li>RADIUS/AAA authentication</li>
+          <li>Captive portal &amp; voucher system</li>
+          <li>Bandwidth shaping per user</li>
+          <li>Multi-tenant management</li>
+        </ul>
+        <a href="/products/aaahotspot" class="prod-link">Learn more →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE PROPS -->
+<section class="value-bg">
+  <div class="section-inner">
+    <div class="section-head reveal" style="text-align:center;">
+      <div class="section-tag">Why Bytescreen</div>
+      <h2 class="section-h2" style="margin:0 auto 1rem;">Security without sacrifice</h2>
+      <p class="section-sub" style="margin:0 auto;">Enterprise-grade security shouldn't cost you simplicity, performance, or your budget.</p>
+    </div>
+    <div class="value-grid">
+      <div class="val-card reveal reveal-delay-1">
+        <div class="val-icon val-i1"><svg viewBox="0 0 24 24"><path d="M12 2L4 6v6c0 5.5 3.5 10.7 8 12 4.5-1.3 8-6.5 8-12V6l-8-4z"/></svg></div>
+        <div class="val-title">AI-Powered Security</div>
+        <div class="val-text">ML models trained on billions of threat signals detect and block zero-day attacks in real time, before signatures are even written.</div>
+      </div>
+      <div class="val-card reveal reveal-delay-2">
+        <div class="val-icon val-i2"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <div class="val-title">Wire-Speed Performance</div>
+        <div class="val-text">Custom ASICs deliver full-stack inspection at wire speed — no bottlenecks, even at peak traffic load with encryption enabled.</div>
+      </div>
+      <div class="val-card reveal reveal-delay-3">
+        <div class="val-icon val-i3"><svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+        <div class="val-title">Unified Management</div>
+        <div class="val-text">Policies, logs, alerts, and compliance in one pane of glass — across every product, every site, every user.</div>
+      </div>
+      <div class="val-card reveal reveal-delay-4">
+        <div class="val-icon val-i4"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+        <div class="val-title">24/7 Expert Support</div>
+        <div class="val-text">Round-the-clock access to certified security engineers. Average ticket response under 15 minutes, every day of the year.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section class="solutions-bg" id="solutions">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-tag">Solutions</div>
+      <h2 class="section-h2">Designed for your industry</h2>
+      <p class="section-sub">Purpose-built solutions for the compliance, scale, and simplicity challenges your vertical faces.</p>
+    </div>
+    <div class="solutions-layout">
+      <div class="solutions-tabs">
+        <div class="sol-tab active" tabindex="0" onclick="selectTab(this,0)" onkeypress="if(event.key==='Enter')selectTab(this,0)">
+          <div class="sol-tab-icon">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <div>
+            <div class="sol-tab-name">Healthcare</div>
+            <div class="sol-tab-desc">HIPAA-compliant segmentation &amp; patient data protection</div>
+          </div>
+        </div>
+        <div class="sol-tab" tabindex="0" onclick="selectTab(this,1)" onkeypress="if(event.key==='Enter')selectTab(this,1)">
+          <div class="sol-tab-icon">
+            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <div>
+            <div class="sol-tab-name">Retail &amp; Branch</div>
+            <div class="sol-tab-desc">Secure multi-site networks with SD-WAN &amp; POS protection</div>
+          </div>
+        </div>
+        <div class="sol-tab" tabindex="0" onclick="selectTab(this,2)" onkeypress="if(event.key==='Enter')selectTab(this,2)">
+          <div class="sol-tab-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+          </div>
+          <div>
+            <div class="sol-tab-name">Education</div>
+            <div class="sol-tab-desc">Safe internet access, content filtering, campus Wi-Fi</div>
+          </div>
+        </div>
+        <div class="sol-tab" tabindex="0" onclick="selectTab(this,3)" onkeypress="if(event.key==='Enter')selectTab(this,3)">
+          <div class="sol-tab-icon">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          </div>
+          <div>
+            <div class="sol-tab-name">Financial Services</div>
+            <div class="sol-tab-desc">PCI-DSS compliance, fraud prevention, zero-trust access</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sol-panel" id="sol-panel">
+        <div class="sol-panel-tag" id="sp-tag">Healthcare</div>
+        <h3 class="sol-panel-h3" id="sp-h3">HIPAA-Compliant Network Security</h3>
+        <p class="sol-panel-text" id="sp-text">Protect patient records and medical IoT devices with granular segmentation. Bytescreen's NGFW enforces HIPAA policies automatically, while SD-WAN keeps clinical applications fast and reliable across all facilities.</p>
+        <div class="sol-feature-list" id="sp-features">
+          <div class="sol-feature-item"><div class="sol-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Automatic HIPAA policy enforcement</div>
+          <div class="sol-feature-item"><div class="sol-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Medical IoT device segmentation</div>
+          <div class="sol-feature-item"><div class="sol-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Encrypted inter-facility SD-WAN</div>
+          <div class="sol-feature-item"><div class="sol-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Real-time compliance audit logging</div>
+        </div>
+        <a href="/solutions/healthcare" class="btn-primary" style="font-size:0.88rem;padding:0.65rem 1.4rem;">Explore Healthcare Solution →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAS -->
+<section class="personas-bg" id="personas">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-tag">Who we serve</div>
+      <h2 class="section-h2">A solution for every stakeholder</h2>
+      <p class="section-sub">Whether you're hands-on in the network or driving strategic decisions, Bytescreen has the right entry point.</p>
+    </div>
+    <div class="persona-grid">
+      <div class="persona-card reveal reveal-delay-1">
+        <div class="persona-avatar">EM</div>
+        <div class="persona-name">Emma</div>
+        <div class="persona-role">Network Admin</div>
+        <div class="persona-need">Needs scalable NGFW and SD-WAN to connect distributed retail stores securely. Compares throughput specs and TCO.</div>
+        <div class="persona-journey">
+          <div class="journey-step"><span class="step-dot"></span>Browse NGFW specs</div>
+          <div class="journey-step"><span class="step-dot"></span>Review Retail solution</div>
+          <div class="journey-step"><span class="step-dot"></span>Read case study</div>
+          <div class="journey-step"><span class="step-dot"></span>Request demo</div>
+        </div>
+      </div>
+      <div class="persona-card reveal reveal-delay-2">
+        <div class="persona-avatar">RJ</div>
+        <div class="persona-name">Raj</div>
+        <div class="persona-role">CIO / CISO</div>
+        <div class="persona-need">Healthcare CIO evaluating Zero Trust strategy. Values Gartner recognition, compliance posture, and vendor ROI narratives.</div>
+        <div class="persona-journey">
+          <div class="journey-step"><span class="step-dot"></span>Read analyst reports</div>
+          <div class="journey-step"><span class="step-dot"></span>Download whitepaper</div>
+          <div class="journey-step"><span class="step-dot"></span>View trust signals</div>
+          <div class="journey-step"><span class="step-dot"></span>Schedule sales call</div>
+        </div>
+      </div>
+      <div class="persona-card reveal reveal-delay-3">
+        <div class="persona-avatar">CA</div>
+        <div class="persona-name">Carlos</div>
+        <div class="persona-role">MSP Partner</div>
+        <div class="persona-need">IT services provider looking to resell Bytescreen NaaS. Needs partner portal, trial VMs, and sales collateral.</div>
+        <div class="persona-journey">
+          <div class="journey-step"><span class="step-dot"></span>Explore partner program</div>
+          <div class="journey-step"><span class="step-dot"></span>Register as reseller</div>
+          <div class="journey-step"><span class="step-dot"></span>Download demo VM</div>
+          <div class="journey-step"><span class="step-dot"></span>Use support portal</div>
+        </div>
+      </div>
+      <div class="persona-card reveal reveal-delay-4">
+        <div class="persona-avatar">LM</div>
+        <div class="persona-name">Li Mei</div>
+        <div class="persona-role">SMB Owner</div>
+        <div class="persona-need">Café owner needing simple, affordable Wi-Fi hotspot. Discovers Bytescreen via search for "small business hotspot."</div>
+        <div class="persona-journey">
+          <div class="journey-step"><span class="step-dot"></span>Land on homepage</div>
+          <div class="journey-step"><span class="step-dot"></span>View hotspot product</div>
+          <div class="journey-step"><span class="step-dot"></span>Check pricing plans</div>
+          <div class="journey-step"><span class="step-dot"></span>Contact sales</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testi-bg">
+  <div class="section-inner">
+    <div class="section-head reveal" style="text-align:center;">
+      <div class="section-tag">Customer Stories</div>
+      <h2 class="section-h2" style="margin:0 auto 1rem;">Results our customers see</h2>
+      <p class="section-sub" style="margin:0 auto;">Real outcomes from organizations that trust Bytescreen to protect and connect their networks.</p>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">Bytescreen's NGFW cut our incident response time by 60%. The AI threat detection flags things our old signature-based system completely missed. Migration was surprisingly painless.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">SL</div>
+          <div><div class="testi-name">Sarah L.</div><div class="testi-org">Head of IT, RetailCorp</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">We needed HIPAA compliance across 12 hospital sites without disrupting clinical workflows. Bytescreen's SD-WAN with integrated policy enforcement made it seamless. Audit-ready in 3 months.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">MK</div>
+          <div><div class="testi-name">Dr. Mohan K.</div><div class="testi-org">CIO, HealthNet Systems</div></div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-3">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">The BT-Hotspot solution manages Wi-Fi for 800+ students on our campus. The captive portal, content filtering, and per-user bandwidth policies all work out of the box. Support is exceptional.</p>
+        <div class="testi-author">
+          <div class="testi-avatar">TN</div>
+          <div><div class="testi-name">Thomas N.</div><div class="testi-org">Network Lead, EduGroup</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section" id="contact">
+  <div class="cta-orb1"></div>
+  <div class="cta-orb2"></div>
+  <div class="cta-inner reveal">
+    <div class="section-tag" style="display:block;text-align:center;margin-bottom:0.75rem;">Get Started</div>
+    <h2 class="section-h2" style="text-align:center;margin-bottom:1rem;">Ready to secure your network?</h2>
+    <p class="section-sub" style="text-align:center;max-width:500px;margin:0 auto 2.5rem;">Talk to one of our security engineers. We'll walk you through a live demo tailored to your environment — no strings attached.</p>
+    <div class="cta-actions">
+      <a href="#" class="btn-primary" style="font-size:1rem;padding:0.9rem 2rem;">Request a Free Demo →</a>
+      <a href="/pricing" class="btn-ghost" style="font-size:1rem;padding:0.9rem 2rem;">View Pricing Plans</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">
+          <div class="logo-mark">
+            <svg viewBox="0 0 18 18" fill="none">
+              <path d="M9 2a7 7 0 0 1 0 14A7 7 0 0 1 9 2z" stroke="rgba(255,255,255,0.3)" stroke-width="1"/>
+              <path d="M4 9c0-2.76 2.24-5 5-5s5 2.24 5 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="9" cy="9" r="2" fill="white"/>
+            </svg>
+          </div>
+          Bytescreen
+        </div>
+        <p class="footer-about">Bytescreen empowers businesses of all sizes with AI-driven network security — next-gen firewalls, intelligent SD-WAN, and managed hotspot solutions.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Products</div>
+        <ul class="footer-links">
+          <li><a href="/products/ngfw">BT-Firewall (NGFW)</a></li>
+          <li><a href="/products/sd-wan">BT-WAN (SD-WAN)</a></li>
+          <li><a href="/products/aaahotspot">BT-Hotspot (AAA)</a></li>
+          <li><a href="/products/network-management">Network Management</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Solutions</div>
+        <ul class="footer-links">
+          <li><a href="/solutions/healthcare">Healthcare</a></li>
+          <li><a href="/solutions/education">Education</a></li>
+          <li><a href="/solutions/retail">Retail</a></li>
+          <li><a href="/solutions/financial-services">Financial Services</a></li>
+          <li><a href="/solutions/secure-branch">Secure Branch</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <ul class="footer-links">
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/resources">Resources</a></li>
+          <li><a href="/pricing">Pricing</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/support">Support</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2025 Bytescreen Technologies. All rights reserved.</div>
+      <div class="footer-badges">
+        <span class="badge-pill">ISO 27001</span>
+        <span class="badge-pill">SOC 2 Type II</span>
+        <span class="badge-pill">HIPAA Ready</span>
+        <span class="badge-pill">PCI-DSS</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"><span class="toast-dot"></span><span id="toastMsg">Coming soon</span></div>
+
+<script>
+/* ---- Nav scroll ---- */
+window.addEventListener('scroll', () => {
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 20);
+  updateActiveLink();
+});
+
+/* ---- Smooth scroll helper ---- */
+function navScrollTo(selector) {
+  const el = document.querySelector(selector);
+  if (!el) return;
+  const offset = 80;
+  const top = el.getBoundingClientRect().top + window.scrollY - offset;
+  window.scrollTo({ top, behavior: 'smooth' });
+}
+
+/* ---- Active link highlight ---- */
+const sections = ['products','solutions','personas','contact'];
+function updateActiveLink() {
+  const pos = window.scrollY + 120;
+  let active = '';
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= pos) active = id;
+  });
+  document.querySelectorAll('.nav-links > li > a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + active);
+  });
+}
+
+/* ---- Dropdown hover / click ---- */
+['drop-products','drop-solutions','drop-resources','drop-about'].forEach(id => {
+  const li = document.getElementById(id);
+  if (!li) return;
+  let timer;
+  li.addEventListener('mouseenter', () => { clearTimeout(timer); li.classList.add('open'); });
+  li.addEventListener('mouseleave', () => { timer = setTimeout(() => li.classList.remove('open'), 120); });
+  li.querySelector('a').addEventListener('click', e => {
+    if (window.innerWidth > 900) { e.preventDefault(); li.classList.toggle('open'); }
+  });
+});
+
+/* Close dropdowns on outside click */
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-links')) {
+    document.querySelectorAll('.nav-links > li.open').forEach(li => li.classList.remove('open'));
+  }
+});
+
+/* ---- Hamburger / mobile drawer ---- */
+const ham = document.getElementById('navHam');
+const mob = document.getElementById('navMobile');
+ham.addEventListener('click', () => {
+  const open = mob.classList.toggle('open');
+  ham.classList.toggle('open', open);
+  ham.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+});
+function closeMobile() {
+  mob.classList.remove('open');
+  ham.classList.remove('open');
+  ham.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+
+/* ---- Toast ---- */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').innerHTML = msg;
+  clearTimeout(toastTimer);
+  t.classList.add('show');
+  toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+}
+
+/* ---- Particles ---- */
+(function() {
+  const c = document.getElementById('particles');
+  for (let i = 0; i < 24; i++) {
+    const d = document.createElement('div');
+    d.className = 'particle';
+    const sz = Math.random() * 3 + 1;
+    d.style.cssText = `width:${sz}px;height:${sz}px;left:${Math.random()*100}%;top:${Math.random()*100}%;animation-duration:${Math.random()*8+6}s;animation-delay:${Math.random()*8}s;opacity:${Math.random()*0.5+0.2}`;
+    c.appendChild(d);
+  }
+})();
+
+/* ---- Scroll reveal ---- */
+const reveals = document.querySelectorAll('.reveal');
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+}, { threshold: 0.12 });
+reveals.forEach(el => ro.observe(el));
+
+/* ---- Live dashboard ticker ---- */
+function rnd(base, variance) { return (base + (Math.random()-0.5)*variance).toFixed(1); }
+let threats = 847;
+setInterval(() => {
+  document.getElementById('mPkts').textContent = (Math.random()*0.4+1.0).toFixed(1)+'M';
+  document.getElementById('mLat').textContent = rnd(0.8, 0.3)+'ms';
+  threats += Math.floor(Math.random()*3);
+  document.getElementById('mThreats').textContent = threats;
+  document.getElementById('mTraffic').textContent = rnd(38.4, 2)+' Gb';
+}, 2400);
+
+/* ---- Solutions tab ---- */
+const solData = [
+  { tag:'Healthcare', h3:'HIPAA-Compliant Network Security', text:'Protect patient records and medical IoT devices with granular segmentation. Bytescreen\'s NGFW enforces HIPAA policies automatically, while SD-WAN keeps clinical applications fast and reliable across all facilities.', features:['Automatic HIPAA policy enforcement','Medical IoT device segmentation','Encrypted inter-facility SD-WAN','Real-time compliance audit logging'] },
+  { tag:'Retail & Branch', h3:'Secure Multi-Site Retail Networks', text:'Connect hundreds of branch locations over a resilient SD-WAN fabric. Protect POS systems, guest Wi-Fi, and back-office traffic with policy-based segmentation and centralized management.', features:['SD-WAN for branch connectivity','POS network isolation','Guest Wi-Fi with AAA hotspot','Centralized multi-site console'] },
+  { tag:'Education', h3:'Safe, Scalable Campus Networks', text:'Deploy content-filtered internet access across classrooms, labs, and dormitories. Bytescreen\'s hotspot controller manages thousands of concurrent users with per-policy bandwidth and time controls.', features:['Content filtering & CIPA compliance','Per-user bandwidth management','Captive portal for student access','Scalable AAA authentication'] },
+  { tag:'Financial Services', h3:'Zero Trust for Financial Networks', text:'Meet PCI-DSS and regulatory requirements with micro-segmented networks and continuous monitoring. Bytescreen\'s AI engine identifies anomalous behavior before breaches occur.', features:['PCI-DSS network segmentation','Zero Trust access policies','Anomaly detection & SIEM integration','Encrypted WAN between offices'] }
+];
+
+function selectTab(el, idx) {
+  document.querySelectorAll('.sol-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const d = solData[idx];
+  const panel = document.getElementById('sol-panel');
+  panel.style.opacity = '0'; panel.style.transform = 'translateY(10px)';
+  setTimeout(() => {
+    document.getElementById('sp-tag').textContent = d.tag;
+    document.getElementById('sp-h3').textContent = d.h3;
+    document.getElementById('sp-text').textContent = d.text;
+    document.getElementById('sp-features').innerHTML = d.features.map(f => `
+      <div class="sol-feature-item">
+        <div class="sol-check"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        ${f}
+      </div>`).join('');
+    panel.style.transition = 'opacity 0.35s ease, transform 0.35s ease';
+    panel.style.opacity = '1'; panel.style.transform = 'translateY(0)';
+  }, 180);
+}
+</script>
+</body>
+</html>
