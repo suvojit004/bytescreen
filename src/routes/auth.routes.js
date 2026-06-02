@@ -3,9 +3,11 @@ const router = require("express").Router();
 const { setupAdmin,login} = require("../controllers/auth.controller");
 const protect = require("../middlewares/auth.middleware")
 const authorize = require("../middlewares/authorize.middleware")
+const validate = require ("../middlewares/validate.middleware")
+const {loginSchema, setupAdminSchema,} = require("../utils/auth.validation")
 
-router.post("/setup", setupAdmin);
-router.post("/login", login)
+router.post("/setup", validate(setupAdminSchema), setupAdmin);
+router.post("/login", validate(loginSchema) ,login)
 router.get(
   "/me",
   protect,
