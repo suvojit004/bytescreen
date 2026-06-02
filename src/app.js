@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const healthRoutes = require("./routes/health.routes");
 const app = express();
 const authRoute = require("./routes/auth.routes");
+const userRoutes = require("./routes/user.routes");
 const notFound = require(
   "./middlewares/notFound.middleware"
 );
@@ -20,7 +21,8 @@ app.use(helmet());
 app.use(morgan("dev"));
 
 app.use("/api/health", healthRoutes);
-app.use("/createuser", authRoute)
+app.use("/createuser", authRoute);
+app.use("/users", userRoutes);
 app.get("/", (req, res) => {
   res.json({
     success: true,

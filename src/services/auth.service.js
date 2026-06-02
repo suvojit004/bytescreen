@@ -30,7 +30,7 @@ const createInitialAdmin = async (payload) => {
 const loginUser = async ({ email, password,}) => {
   const user = await User.findOne({
     email,
-  });
+  }).select("+password");
 
   if (!user) {
     throw new AppError("User Does not Exist", 404);
