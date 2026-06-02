@@ -1,14 +1,15 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/user.model");
 const { generateAccessToken,} = require("../utils/jwt");
+const AppError = require("../utils/AppError")
 
 
 const createInitialAdmin = async (payload) => {
   const existingUser = await User.findOne();
 
   if (existingUser) {
-    throw new Error(
-      "Initial admin already exists"
+    throw new AppError(
+      "Initial admin already exists", 409
     );
   }
 
@@ -32,7 +33,7 @@ const loginUser = async ({ email, password,}) => {
   });
 
   if (!user) {
-    throw new Error("Invalid credentials");
+    throw new AppError("User Does not Exist", 404);
   }
 
   const isPasswordMatched =
@@ -42,7 +43,7 @@ const loginUser = async ({ email, password,}) => {
     );
 
   if (!isPasswordMatched) {
-    throw new Error("Invalid credentials");
+    throw new AppError("Invalid credentials", 401);
   }
 
   const accessToken =

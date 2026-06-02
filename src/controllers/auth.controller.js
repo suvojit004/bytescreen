@@ -1,7 +1,8 @@
 const authService = require("../services/auth.service");
+const asyncHandler = require("../utils/asyncHandler");
 
-const setupAdmin = async (req, res, next) => {
-    try {
+const setupAdmin = asyncHandler ( async (req, res, next) => {
+   
         const user =
             await authService.createInitialAdmin(
                 req.body
@@ -17,17 +18,13 @@ const setupAdmin = async (req, res, next) => {
                 role: user.role,
             },
         });
-    } catch (error) {
-        next(error);
-    }
-};
+});
 
-const login = async (
+const login = asyncHandler ( async (
   req,
   res,
   next
 ) => {
-  try {
     const result =
       await authService.loginUser(
         req.body
@@ -43,10 +40,7 @@ const login = async (
         role: result.user.role,
       },
     });
-  } catch (error) {
-    next(error);
-  }
-};
+});
 
 module.exports = {
     setupAdmin,
