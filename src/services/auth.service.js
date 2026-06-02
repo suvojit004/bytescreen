@@ -26,7 +26,6 @@ const createInitialAdmin = async (payload) => {
   return user;
 };
 
-
 const loginUser = async ({ email, password,}) => {
   const user = await User.findOne({
     email,
@@ -35,6 +34,13 @@ const loginUser = async ({ email, password,}) => {
   if (!user) {
     throw new AppError("User Does not Exist", 404);
   }
+
+  if (!user.isActive) {
+  throw new AppError(
+    "User account is inactive",
+    403
+  );
+}
 
   const isPasswordMatched =
     await bcrypt.compare(

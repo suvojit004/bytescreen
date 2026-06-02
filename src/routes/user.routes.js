@@ -2,7 +2,7 @@ const router =
   require("express").Router();
 
 const {
-  createUser,getUsers,getUserById
+  createUser,getUsers,getUserById,updateUser
 } = require("../controllers/user.controller");
 
 const protect =
@@ -15,7 +15,7 @@ const validate =
   require("../middlewares/validate.middleware");
 
 const {
-  createUserSchema, userIdSchema
+  createUserSchema, userIdSchema, updateUserSchema
 } = require("../utils/user.validation");
 
 router.post(
@@ -52,6 +52,18 @@ router.get(
   ),
   getUserById
 );
+
+
+
+router.patch(
+  "/:id",
+  protect,
+  authorize("super_admin"),
+  validate(userIdSchema, "params"),
+  validate(updateUserSchema),
+  updateUser
+);
+
 
 router.get("/", protect,authorize("super_admin", "admin"),getUsers);
 

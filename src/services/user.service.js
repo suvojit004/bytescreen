@@ -41,7 +41,7 @@ const getUsers = async () => {
       "User not found",
       404
     );}
-    console.log(users)
+  
     return users
 };
 
@@ -56,8 +56,48 @@ const getUserById = async (id)=>{
   return user;
 }
 
+
+
+const updateUser = async (
+  userId,
+  payload
+) => {
+
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new AppError(
+      "User not found",
+      404
+    );
+  }
+
+  const allowedFields = [
+    "firstName",
+    "lastName",
+    "role",
+    "isActive",
+  ];
+
+  Object.keys(payload).forEach(
+    (key) => {
+      if (
+        allowedFields.includes(key)
+      ) {
+        user[key] = payload[key];
+      }
+    }
+  );
+  
+
+  await user.save();
+
+  return user;
+};
+
 module.exports = {
   createUser,
   getUsers,
   getUserById,
+  updateUser
 };
