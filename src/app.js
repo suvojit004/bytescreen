@@ -4,7 +4,7 @@ const helmet = require("helmet");
 const morgan = require("morgan");
 const healthRoutes = require("./routes/health.routes");
 const app = express();
-const authRoute = require("./modules/auth/auth.routes");
+const authRoute = require("./routes/auth.routes");
 const notFound = require(
   "./middlewares/notFound.middleware"
 );
