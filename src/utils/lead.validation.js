@@ -29,8 +29,16 @@ const createLeadSchema =
 const updateLeadSchema = z.object({
   status: z.enum(Object.values(LEAD_STATUS)),
 });
+const addLeadNoteSchema =
+  z.object({
+    text: z
+      .string()
+      .min(3)
+      .max(1000),
+  });
 
 module.exports = {
   createLeadSchema,
-  updateLeadSchema
+  updateLeadSchema,
+  addLeadNoteSchema,
 };
