@@ -1,5 +1,6 @@
 const { z } = require("zod");
 const INQUIRY_TYPES = require("../constants/inquiry-types");
+const LEAD_STATUS = require("../constants/lead-status")
 
 const createLeadSchema =
   z.object({
@@ -25,6 +26,11 @@ const createLeadSchema =
       z.string().min(10),
   });
 
+const updateLeadSchema = z.object({
+  status: z.enum(Object.values(LEAD_STATUS)),
+});
+
 module.exports = {
   createLeadSchema,
+  updateLeadSchema
 };

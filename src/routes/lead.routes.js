@@ -3,6 +3,8 @@ const router = require("express").Router();
 const {
   createLead,
   getLeads,
+  getLeadById,
+  updateLead,
 } = require(
   "../controllers/lead.controller"
 );
@@ -18,10 +20,14 @@ const authorize =
 
 const {
   createLeadSchema,
+  updateLeadSchema,
 } = require(
   "../utils/lead.validation"
 );
 
+const {
+  userIdSchema
+} = require("../utils/user.validation");
 router.post(
   "/",
   validate(
@@ -39,5 +45,20 @@ router.get(
   ),
   getLeads
 );
+
+router.get("/:id",
+    protect,
+    authorize("super_admin", "admin"),
+    validate(userIdSchema, "params"),
+    getLeadById
+)
+
+router.patch("/:id",
+    protect,
+    authorize("super_admin", "admin"),
+    validate(userIdSchema, "params"),
+    validate(updateLeadSchema),
+    updateLead
+)
 
 module.exports = router;
