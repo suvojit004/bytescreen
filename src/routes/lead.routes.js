@@ -6,6 +6,7 @@ const {
   getLeadById,
   updateLead,
   addNoteToLead,
+  assignLead,
 } = require(
   "../controllers/lead.controller"
 );
@@ -23,6 +24,7 @@ const {
   createLeadSchema,
   updateLeadSchema,
   addLeadNoteSchema,
+  assignLeadSchema,
 } = require(
   "../utils/lead.validation"
 );
@@ -79,5 +81,20 @@ router.post(
   ),
   addNoteToLead
 );
-
+router.patch(
+  "/:id/assign",
+  protect,
+  authorize(
+    "super_admin",
+    "admin"
+  ),
+  validate(
+    userIdSchema,
+    "params"
+  ),
+  validate(
+    assignLeadSchema
+  ),
+  assignLead
+);
 module.exports = router;

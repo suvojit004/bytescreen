@@ -8,16 +8,7 @@ const {loginSchema, setupAdminSchema,} = require("../utils/auth.validation")
 
 router.post("/setup", validate(setupAdminSchema), setupAdmin);
 router.post("/login", validate(loginSchema) ,login)
-router.get(
-  "/me",
-  protect,
-  (req, res) => {
-    res.status(200).json({
-      success: true,
-      user: req.user,
-    });
-  }
-);
+
 router.get(
   "/admin-only",
   protect,

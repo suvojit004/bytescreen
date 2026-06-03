@@ -73,7 +73,13 @@ const leadSchema = new mongoose.Schema(
             default:
                 LEAD_STATUS.NEW,
         },
+        assignedTo: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User",
+            default: null,
+        },
     },
+
     {
         timestamps: true,
     }

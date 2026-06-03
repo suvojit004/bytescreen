@@ -77,11 +77,28 @@ const addNoteToLead =
     }
   );
 
+const assignLead =
+  asyncHandler(
+    async (req, res) => {
+      const lead =
+        await leadService.assignLead(
+          req.params.id,
+          req.body.assignedTo,
+          req.user._id
+        );
+
+      res.status(200).json({
+        success: true,
+        data: lead,
+      });
+    }
+  );
+
 module.exports = {
   createLead,
   getLeads,
   getLeadById,
   updateLead,
   addNoteToLead,
-
+  assignLead,
 };
