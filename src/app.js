@@ -9,6 +9,7 @@ const healthRoutes = require("./routes/health.routes");
 const authRoute = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
 const leadRoutes = require("./routes/lead.routes");
+const eventRoute = require("./routes/event.route")
 
 const notFound = require(
   "./middlewares/notFound.middleware"
@@ -29,6 +30,7 @@ app.use("/api/health", healthRoutes);
 app.use("/createuser", authRoute);
 app.use("/users", userRoutes);
 app.use("/leads", leadRoutes);
+app.use ("/api-events",eventRoute)
 app.get("/", (req, res) => {
   res.json({
     success: true,
@@ -36,9 +38,7 @@ app.get("/", (req, res) => {
   });
 });
 
-app.get("/error", (req, res) => {
-  throw new Error("Test Error");
-});
+
 
 app.use(notFound);
 app.use(errorHandler);

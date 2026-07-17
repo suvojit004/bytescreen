@@ -38,46 +38,14 @@ const leadSchema = new mongoose.Schema(
                 INQUIRY_TYPES
             ),
             required: true,
+            default: "demo"
         },
 
         message: {
             type: String,
             required: true,
-        },
-        notes: [
-            {
-                text: {
-                    type: String,
-                    required: true,
-                    trim: true,
-                },
-
-                createdBy: {
-                    type: mongoose.Schema.Types.ObjectId,
-                    ref: "User",
-                    required: true,
-                },
-
-                createdAt: {
-                    type: Date,
-                    default: Date.now,
-                },
-            },
-        ],
-
-        status: {
-            type: String,
-            enum: Object.values(
-                LEAD_STATUS
-            ),
-            default:
-                LEAD_STATUS.NEW,
-        },
-        assignedTo: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "User",
-            default: null,
-        },
+        },   
+       
     },
 
     {

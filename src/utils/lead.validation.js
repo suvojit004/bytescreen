@@ -1,6 +1,6 @@
 const { z } = require("zod");
 const INQUIRY_TYPES = require("../constants/inquiry-types");
-const LEAD_STATUS = require("../constants/lead-status")
+
 const mongoose = require("mongoose");
 
 const createLeadSchema =
@@ -21,37 +21,17 @@ const createLeadSchema =
       z.string().optional(),
 
     inquiryType:
-      z.enum(Object.values(INQUIRY_TYPES)),
+      z.enum(Object.values(INQUIRY_TYPES)).default("demo"),
 
     message:
       z.string().min(10),
   });
 
-const updateLeadSchema = z.object({
-  status: z.enum(Object.values(LEAD_STATUS)),
-});
-const addLeadNoteSchema =
-  z.object({
-    text: z
-      .string()
-      .min(3)
-      .max(1000),
-  });
+const updateLeadSchema = createLeadSchema.partial();
 
-  const assignLeadSchema =
-  z.object({
-    assignedTo:
-      z.string().refine(
-    (id) => mongoose.Types.ObjectId.isValid(id),
-    {
-      message: "Invalid user id",
-    }
-  ),
-  });
 
 module.exports = {
   createLeadSchema,
   updateLeadSchema,
-  addLeadNoteSchema,
-  assignLeadSchema,
+ 
 };

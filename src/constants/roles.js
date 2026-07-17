@@ -1,9 +1,6 @@
 const ROLES = {
-  SUPER_ADMIN:
-    "super_admin",
-
+  SUPER_ADMIN: "super_admin",
   ADMIN: "admin",
-
   EDITOR: "editor",
 };
 
