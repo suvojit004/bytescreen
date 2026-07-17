@@ -10,6 +10,7 @@ const authRoute = require("./routes/auth.routes");
 const userRoutes = require("./routes/user.routes");
 const leadRoutes = require("./routes/lead.routes");
 const eventRoute = require("./routes/event.route")
+const partnerInquiryRoutes = require("./routes/partnerInquiry.route")
 
 const notFound = require(
   "./middlewares/notFound.middleware"
@@ -31,6 +32,7 @@ app.use("/createuser", authRoute);
 app.use("/users", userRoutes);
 app.use("/leads", leadRoutes);
 app.use ("/api-events",eventRoute)
+app.use("/api-partner-inquiry", partnerInquiryRoutes)
 app.get("/", (req, res) => {
   res.json({
     success: true,

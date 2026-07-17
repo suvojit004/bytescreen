@@ -75,7 +75,7 @@ const getLeadById = async (leadId) => {
     return lead;
 };
 
-const deleteLeadById = async (leadId, payload)=>{
+const deleteLeadById = async (leadId)=>{
     const lead = await Lead.findById(leadId);
     if (!lead) {
         throw new AppError(
