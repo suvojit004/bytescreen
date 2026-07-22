@@ -38,7 +38,7 @@ const {
 // Public Form Submission
 router.post(
   "/",
-  //leadLimiter,
+  leadLimiter,
   validate(
     createPartnerInquirySchema
   ),
