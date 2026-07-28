@@ -1,6 +1,6 @@
 const { z } = require("zod");
 const INQUIRY_TYPES = require("../constants/inquiry-types");
-
+const PRODUCT = require ("../constants/product");
 const mongoose = require("mongoose");
 
 const createLeadSchema =
@@ -22,6 +22,8 @@ const createLeadSchema =
 
     inquiryType:
       z.enum(Object.values(INQUIRY_TYPES)).default("demo"),
+    product:
+     z.enum(PRODUCT.PRODUCT),
 
     message:
       z.string().min(10),

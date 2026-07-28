@@ -10,7 +10,14 @@ const MEDIA_TYPES = [
   "video",
 ];
 
+const PRODUCT = [
+   "BT-Network Security",
+   "BT-WAN",
+   "BT-NMS"
+]
+
 module.exports = {
   PRODUCT_STATUS,
   MEDIA_TYPES,
+  PRODUCT
 };

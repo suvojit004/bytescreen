@@ -40,7 +40,7 @@ const leadSchema = new mongoose.Schema(
             required: true,
             default: "demo"
         },
-
+        product: { type: String, required: true, trim: true },
         message: {
             type: String,
             required: true,
