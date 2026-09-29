@@ -1,0 +1,18 @@
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <div class="wrap nav">
+      <a class="logo" href="/" aria-label="Bytescreen home"><span class="mark" aria-hidden="true"></span>bytescreen</a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" data-menu-toggle>
+        <span class="menu-bar" aria-hidden="true"></span>
+        <span class="sr-only">Menu</span>
+      </button>
+      <nav class="navlinks" id="site-nav" aria-label="Main">
+        <a href="/#solutions">Solutions</a>
+        <a href="/about"<%- path === "/about" ? ' aria-current="page"' : "" %>>Company</a>
+        <a href="/partner"<%- path === "/partner" ? ' aria-current="page"' : "" %>>Partners</a>
+        <a href="/contact"<%- path === "/contact" ? ' aria-current="page"' : "" %>>Contact</a>
+        <a class="button button-sm" href="mailto:sales@bytescreentech.com?subject=Bytescreen%20demo%20request">Schedule a demo</a>
+      </nav>
+    </div>
+  </header>

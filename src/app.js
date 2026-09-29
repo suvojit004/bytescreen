@@ -1,3 +1,4 @@
+const path = require("path");
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -13,6 +14,7 @@ const eventRoute = require("./routes/event.route")
 const partnerInquiryRoutes = require("./routes/partnerInquiry.route")
 const productRoutes = require("./routes/product.routes")
 const productPublicRoutes = require("./routes/product.public.routes")
+const webRoutes = require("./routes/web.routes");
 
 const notFound = require(
   "./middlewares/notFound.middleware"
@@ -24,10 +26,35 @@ const errorHandler = require(
 
 
 
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
 app.use(express.json());
 app.use(cors());
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        // Client logos on the home page are loaded from the main website
+        "img-src": ["'self'", "data:", "https://www.bytescreentech.com"],
+      },
+    },
+  })
+);
 app.use(morgan("dev"));
+app.use(express.static(path.join(__dirname, "public")));
+
+// Defaults shared by every rendered page; routes can override title/description
+app.use((req, res, next) => {
+  res.locals.title = "Bytescreen | Network security that moves with your business";
+  res.locals.description =
+    "Bytescreen helps Indian businesses secure, connect and manage their networks with next-generation firewall, SD-WAN and Network-as-a-Service.";
+  res.locals.path = req.path;
+  res.locals.year = new Date().getFullYear();
+  next();
+});
+
+app.use("/", webRoutes);
 
 app.use("/api/health", healthRoutes);
 app.use("/createuser", authRoute);

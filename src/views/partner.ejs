@@ -1,0 +1,140 @@
+<%- include("partials/header") %>
+<%- include("partials/nav") %>
+
+<%
+  const companyTypeLabels = {
+    reseller: "Reseller",
+    "system-integrator": "System integrator",
+    msp: "Managed service provider (MSP)",
+    distributor: "Distributor",
+    other: "Other",
+  };
+  const interestLabels = {
+    FireWall: "Firewall (network security)",
+    "SD-WAN": "SD-WAN",
+  };
+%>
+  <main id="main">
+    <!-- Page hero -->
+    <section class="page-hero" id="top">
+      <div class="wrap">
+        <p class="kicker">Partner with us</p>
+        <h1>Grow with Bytescreen.</h1>
+        <p class="lead">Bring secure, simplified networking to your customers. We work with partners who share our focus on keeping businesses protected, connected and ready for what comes next.</p>
+        <div class="actions hero-actions">
+          <a class="button button-light" href="#apply">Become a partner</a>
+        </div>
+      </div>
+      <div class="wrap">
+        <ul class="partner-types" aria-label="Who we partner with">
+          <li><b>Resellers</b><span>Add network security and SD-WAN to your portfolio</span></li>
+          <li><b>System integrators</b><span>Deliver complete, secure network projects</span></li>
+          <li><b>Managed service providers</b><span>Run secure networks as a service</span></li>
+          <li><b>Distributors</b><span>Take Bytescreen to new markets and regions</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Why partner -->
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Why partner with Bytescreen?</h2>
+          <p class="intro">A partnership built on solutions your customers need, and a team that stays with you after the first deployment.</p>
+        </div>
+        <div class="reasons">
+          <article class="reason">
+            <h3>Solutions in demand</h3>
+            <p>Next-generation firewall, SD-WAN and Network-as-a-Service: the security and connectivity businesses are looking for today.</p>
+          </article>
+          <article class="reason">
+            <h3>Simpler to sell and deploy</h3>
+            <p>Security and networking in one conversation, with a practical rollout that keeps disruption for your customers to a minimum.</p>
+          </article>
+          <article class="reason">
+            <h3>Support around the clock</h3>
+            <p>Our experts are available 24/7, so you and your customers always have someone to turn to.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Apply -->
+    <section class="section partner-apply" id="apply">
+      <div class="wrap contact-grid">
+        <div class="contact-copy">
+          <p class="eyebrow">Partnership enquiry</p>
+          <h2>Let’s build something together.</h2>
+          <p class="intro">Tell us about your business and the customers you serve. Our partnerships team will review your enquiry and get in touch.</p>
+          <ol class="steps">
+            <li><b>Send your enquiry</b><span>Share a few details about your company.</span></li>
+            <li><b>Talk to our team</b><span>We’ll get in touch to understand your goals.</span></li>
+            <li><b>Get started</b><span>Agree the partnership and start working together.</span></li>
+          </ol>
+        </div>
+
+        <form class="contact-form" action="/api-partner-inquiry" method="post" data-ajax-form
+          data-success="Thank you. Our partnerships team will be in touch shortly." novalidate>
+          <div class="field-row">
+            <div class="field">
+              <label for="fullName">Full name <abbr title="required">*</abbr></label>
+              <input id="fullName" name="fullName" type="text" autocomplete="name" required minlength="2" />
+            </div>
+            <div class="field">
+              <label for="companyName">Company name <abbr title="required">*</abbr></label>
+              <input id="companyName" name="companyName" type="text" autocomplete="organization" required minlength="2" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="email">Work email <abbr title="required">*</abbr></label>
+              <input id="email" name="email" type="email" autocomplete="email" required />
+            </div>
+            <div class="field">
+              <label for="phone">Phone <abbr title="required">*</abbr></label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 \(\)\-]{7,20}" />
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="companyType">Company type</label>
+              <select id="companyType" name="companyType">
+                <option value="">Select a type</option>
+                <% companyTypes.forEach((type) => { %>
+                <option value="<%= type %>"><%= companyTypeLabels[type] || type %></option>
+                <% }) %>
+              </select>
+            </div>
+            <div class="field">
+              <label for="interest">Interested in</label>
+              <select id="interest" name="interest">
+                <option value="">Select a solution</option>
+                <% interests.forEach((interest) => { %>
+                <option value="<%= interest %>"><%= interestLabels[interest] || interest %></option>
+                <% }) %>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="message">Tell us about your business</label>
+            <textarea id="message" name="message" rows="5" maxlength="2000"></textarea>
+          </div>
+
+          <!-- Anti-spam: left empty by people, filled by bots; load time stamped by form.js -->
+          <div class="hp-field" aria-hidden="true">
+            <label for="website">Website</label>
+            <input id="website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <input type="hidden" name="formLoadedAt" />
+
+          <div class="form-foot">
+            <button class="button" type="submit">Send enquiry</button>
+            <p class="form-status" role="status" aria-live="polite" data-form-status></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/form.js" defer></script>
+<%- include("partials/footer") %>
