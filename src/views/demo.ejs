@@ -1,0 +1,44 @@
+<%- include("partials/header") %>
+<%- include("partials/nav") %>
+
+  <main id="main">
+    <!-- Page hero -->
+    <section class="page-hero" id="top">
+      <div class="wrap">
+        <p class="kicker">Schedule a demo</p>
+        <h1>See Bytescreen in action.</h1>
+        <p class="lead">Book a live walkthrough with our team and see how Bytescreen protects, connects and manages your network, shaped around your sites, your users and your goals.</p>
+      </div>
+    </section>
+
+    <!-- Demo form -->
+    <section class="section" id="book">
+      <div class="wrap contact-grid">
+        <div class="contact-copy">
+          <p class="eyebrow">What to expect</p>
+          <h2>A demo built around your network.</h2>
+          <p class="intro">Tell us a little about your business and the product you’re interested in. We’ll get in touch to arrange a time that suits you.</p>
+          <ol class="steps">
+            <li><b>Share your requirements</b><span>Pick a product and tell us what you want to achieve.</span></li>
+            <li><b>Schedule a time</b><span>Our team will contact you to arrange the session.</span></li>
+            <li><b>See it live</b><span>Walk through the platform and ask our experts anything.</span></li>
+          </ol>
+          <ul class="contact-list">
+            <li>
+              <span>Prefer to talk now?</span>
+              <a href="tel:+918369071774">+91 836 907 1774</a>
+            </li>
+          </ul>
+        </div>
+
+        <%- include("partials/lead-form", {
+          successText: "Thank you. Our team will be in touch shortly to schedule your demo.",
+          submitLabel: "Book my demo",
+          messageLabel: "What would you like to see?",
+        }) %>
+      </div>
+    </section>
+  </main>
+
+  <script src="/js/form.js" defer></script>
+<%- include("partials/footer") %>

@@ -354,7 +354,7 @@ p { margin: 0; }
 .mobile-demo { display: none; }
 
 /* ---------- About page ---------- */
-.navlinks a[aria-current="page"] { color: var(--white); }
+.navlinks a:not(.button)[aria-current="page"] { color: var(--white); }
 
 .page-hero {
   position: relative; isolation: isolate; overflow: hidden;
@@ -541,9 +541,34 @@ a.support-card:hover { border-color: rgba(125, 141, 255, .6); }
   font-family: var(--font-display); font-variation-settings: "wdth" 118; font-weight: 700; color: var(--signal);
 }
 .steps span { color: var(--steel); font-size: 0.95rem; }
+.steps + .contact-list { margin-top: 32px; border-top: 0; padding-top: 0; }
 
 /* Honeypot field: kept out of view and out of the tab order */
 .hp-field { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+/* ---------- Customers page ---------- */
+.facts-3 { grid-template-columns: repeat(3, 1fr); }
+
+.customer-group-alt { background: var(--paper); }
+.group-head {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px;
+  padding-bottom: 20px; margin-bottom: 32px; border-bottom: 2px solid var(--ink);
+}
+.group-count { color: var(--steel); font-size: 0.95rem; }
+
+/* Cell outlines fill the 1px gaps, so an incomplete last row leaves no grey block */
+.customer-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1px;
+  background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden;
+}
+.customer { display: grid; grid-template-rows: 1fr auto; background: var(--white); outline: 1px solid var(--line); }
+.customer-logo { display: grid; place-items: center; height: 160px; padding: 24px 20px 8px; }
+.customer-logo img {
+  max-width: 85%; max-height: 108px; width: auto; height: auto; object-fit: contain;
+  transition: transform .25s ease;
+}
+.customer:hover .customer-logo img { transform: scale(1.04); }
+.customer-name { padding: 8px 16px 18px; text-align: center; font-size: 0.9rem; font-weight: 500; color: var(--steel); }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 1000px) {
@@ -570,6 +595,9 @@ a.support-card:hover { border-color: rgba(125, 141, 255, .6); }
   .facts { grid-template-columns: repeat(2, 1fr); }
   .fact:nth-child(3) { border-left: 0; }
   .fact:nth-child(n + 3) { border-top: 1px solid var(--line-dark); }
+  .facts-3 { grid-template-columns: repeat(3, 1fr); }
+  .facts-3 .fact:nth-child(3) { border-left: 1px solid var(--line-dark); }
+  .facts-3 .fact:nth-child(n + 3) { border-top: 0; }
   .pillars { grid-template-columns: repeat(3, 1fr); }
   .contact-grid, .support-help, .office-grid { grid-template-columns: 1fr; }
   .partner-types { grid-template-columns: 1fr 1fr; }
@@ -598,6 +626,11 @@ a.support-card:hover { border-color: rgba(125, 141, 255, .6); }
   .pillars { grid-template-columns: 1fr 1fr; }
   .page-hero::after { width: 100%; opacity: .6; }
   .route-cards, .field-row, .support-grid { grid-template-columns: 1fr; }
+  .facts-3 { grid-template-columns: 1fr; }
+  .facts-3 .fact:nth-child(n + 2) { border-left: 0; border-top: 1px solid var(--line-dark); }
+  .customer-grid { grid-template-columns: repeat(2, 1fr); }
+  .customer-logo { height: 120px; padding: 18px 14px 6px; }
+  .customer-logo img { max-height: 80px; }
   .partner-types { grid-template-columns: 1fr; }
   .partner-types li + li { border-left: 0; border-top: 1px solid var(--line-dark); }
   .mobile-demo {

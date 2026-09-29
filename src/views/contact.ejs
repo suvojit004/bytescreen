@@ -1,14 +1,6 @@
 <%- include("partials/header") %>
 <%- include("partials/nav") %>
 
-<%
-  const inquiryLabels = {
-    demo: "Book a demo",
-    consultation: "Consultation",
-    quote: "Request a quote",
-    general: "General enquiry",
-  };
-%>
   <main id="main">
     <!-- Page hero -->
     <section class="page-hero" id="top">
@@ -52,59 +44,12 @@
           </ul>
         </div>
 
-        <form class="contact-form" action="/leads" method="post" data-ajax-form data-success="Thank you. Our sales team will be in touch shortly." novalidate>
-          <div class="field-row">
-            <div class="field">
-              <label for="firstName">First name <abbr title="required">*</abbr></label>
-              <input id="firstName" name="firstName" type="text" autocomplete="given-name" required minlength="2" />
-            </div>
-            <div class="field">
-              <label for="lastName">Last name</label>
-              <input id="lastName" name="lastName" type="text" autocomplete="family-name" />
-            </div>
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="email">Work email <abbr title="required">*</abbr></label>
-              <input id="email" name="email" type="email" autocomplete="email" required />
-            </div>
-            <div class="field">
-              <label for="phone">Phone <abbr title="required">*</abbr></label>
-              <input id="phone" name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 \(\)\-]{7,20}" />
-            </div>
-          </div>
-          <div class="field">
-            <label for="company">Company</label>
-            <input id="company" name="company" type="text" autocomplete="organization" />
-          </div>
-          <div class="field-row">
-            <div class="field">
-              <label for="product">Product <abbr title="required">*</abbr></label>
-              <select id="product" name="product" required>
-                <option value="">Select a product</option>
-                <% products.forEach((product) => { %>
-                <option value="<%= product %>"><%= product %></option>
-                <% }) %>
-              </select>
-            </div>
-            <div class="field">
-              <label for="inquiryType">I’d like to</label>
-              <select id="inquiryType" name="inquiryType">
-                <% inquiryTypes.forEach((type) => { %>
-                <option value="<%= type %>"><%= inquiryLabels[type] || type %></option>
-                <% }) %>
-              </select>
-            </div>
-          </div>
-          <div class="field">
-            <label for="message">How can we help? <abbr title="required">*</abbr></label>
-            <textarea id="message" name="message" rows="5" required minlength="10"></textarea>
-          </div>
-          <div class="form-foot">
-            <button class="button" type="submit">Send to sales</button>
-            <p class="form-status" role="status" aria-live="polite" data-form-status></p>
-          </div>
-        </form>
+        <%- include("partials/lead-form", {
+          inquiryTypes,
+          successText: "Thank you. Our sales team will be in touch shortly.",
+          submitLabel: "Send to sales",
+          messageLabel: "How can we help?",
+        }) %>
       </div>
     </section>
 

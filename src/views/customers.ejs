@@ -1,0 +1,61 @@
+<%- include("partials/header") %>
+<%- include("partials/nav") %>
+
+<%
+  const total = customerGroups.reduce((sum, group) => sum + group.customers.length, 0);
+%>
+  <main id="main">
+    <!-- Page hero -->
+    <section class="page-hero" id="top">
+      <div class="wrap">
+        <p class="kicker">Our customers</p>
+        <h1>Trusted by leading organisations.</h1>
+        <p class="lead">From government departments to growing businesses, organisations across India rely on Bytescreen. Successfully deployed across multiple locations, ensuring security and seamless connectivity.</p>
+      </div>
+      <div class="wrap">
+        <dl class="facts facts-3">
+          <div class="fact"><dt>Organisations served</dt><dd><%= total %></dd></div>
+          <% customerGroups.forEach((group) => { %>
+          <div class="fact"><dt><%= group.title %></dt><dd><%= group.customers.length %></dd></div>
+          <% }) %>
+        </dl>
+      </div>
+    </section>
+
+    <% customerGroups.forEach((group, i) => { %>
+    <section class="section customer-group<%= i % 2 ? ' customer-group-alt' : '' %>" id="<%= group.id %>" aria-labelledby="<%= group.id %>-title">
+      <div class="wrap">
+        <div class="group-head">
+          <h2 id="<%= group.id %>-title"><%= group.title %></h2>
+          <span class="group-count"><%= group.customers.length %> organisations</span>
+        </div>
+        <ul class="customer-grid">
+          <% group.customers.forEach((customer) => { %>
+          <li class="customer">
+            <div class="customer-logo">
+              <img src="/images/customers/<%= customer.logo %>.png" alt="<%= customer.name %> logo" loading="lazy" />
+            </div>
+            <span class="customer-name"><%= customer.name %></span>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </section>
+    <% }) %>
+
+    <!-- CTA -->
+    <section class="cta">
+      <div class="wrap cta-inner">
+        <div class="cta-copy">
+          <h2>Proven deployments. Scalable architecture. Trusted performance.</h2>
+          <p>Join the organisations that rely on Bytescreen to keep their networks secure and connected.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="button button-light" href="/contact#sales">Talk to sales</a>
+          <a class="cta-phone" href="tel:+918369071774">or call +91 836 907 1774</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<%- include("partials/footer") %>

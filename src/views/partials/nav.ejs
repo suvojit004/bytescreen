@@ -10,9 +10,10 @@
       <nav class="navlinks" id="site-nav" aria-label="Main">
         <a href="/#solutions">Solutions</a>
         <a href="/about"<%- path === "/about" ? ' aria-current="page"' : "" %>>Company</a>
+        <a href="/customers"<%- path === "/customers" ? ' aria-current="page"' : "" %>>Customers</a>
         <a href="/partner"<%- path === "/partner" ? ' aria-current="page"' : "" %>>Partners</a>
         <a href="/contact"<%- path === "/contact" ? ' aria-current="page"' : "" %>>Contact</a>
-        <a class="button button-sm" href="mailto:sales@bytescreentech.com?subject=Bytescreen%20demo%20request">Schedule a demo</a>
+        <a class="button button-sm" href="/demo"<%- path === "/demo" ? ' aria-current="page"' : "" %>>Schedule a demo</a>
       </nav>
     </div>
   </header>

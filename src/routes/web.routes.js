@@ -2,6 +2,7 @@ const router = require("express").Router();
 const INQUIRY_TYPES = require("../constants/inquiry-types");
 const { PRODUCT } = require("../constants/product");
 const PartnerInquiry = require("../models/partnerInquiry.model");
+const CUSTOMER_GROUPS = require("../data/customers");
 
 router.get("/", (req, res) => {
   res.render("index");
@@ -32,6 +33,25 @@ router.get("/partner", (req, res) => {
       "Become a Bytescreen partner. Resellers, system integrators, managed service providers and distributors can bring our network security and SD-WAN solutions to their customers.",
     companyTypes: PartnerInquiry.schema.path("companyType").enumValues,
     interests: PartnerInquiry.schema.path("interest").enumValues,
+  });
+});
+
+router.get("/customers", (req, res) => {
+  res.render("customers", {
+    title: "Our customers | Bytescreen",
+    description:
+      "Government bodies and businesses across India trust Bytescreen for secure, seamless network connectivity.",
+    customerGroups: CUSTOMER_GROUPS,
+  });
+});
+
+router.get("/demo", (req, res) => {
+  res.render("demo", {
+    title: "Schedule a demo | Bytescreen",
+    description:
+      "Book a live demo of Bytescreen's next-generation firewall, SD-WAN and Network-as-a-Service with our team.",
+    products: PRODUCT,
+    inquiryTypes: [INQUIRY_TYPES.DEMO],
   });
 });
 
