@@ -1,4 +1,5 @@
 const { z } = require("zod");
+const { RESOURCE_TYPES } = require("../../../constants/product");
 
 const ResourceValidation = z.object({
   title: z
@@ -11,20 +12,17 @@ const ResourceValidation = z.object({
     .trim()
     .optional(),
 
-  type: z.enum([
-    "pdf",
-    "brochure",
-    "whitepaper",
-    "video",
-    "firmware",
-    "guide",
-    "other"
-  ]),
+  type: z.enum(RESOURCE_TYPES),
 
   url: z
     .string()
     .trim()
-    .min(1)
+    .min(1),
+
+  model: z
+    .string()
+    .trim()
+    .optional()
 });
 
 module.exports = ResourceValidation;

@@ -1,0 +1,30 @@
+<%- include("partials/header") %>
+<%- include("partials/nav") %>
+
+  <main id="main">
+    <section class="page-hero not-found" id="top">
+      <div class="wrap not-found-inner">
+        <div class="not-found-copy">
+          <p class="not-found-status"><span class="led led-warn" aria-hidden="true"></span>Error 404 · Destination unreachable</p>
+          <h1>This page has dropped off the network.</h1>
+          <p class="lead">The page you’re looking for doesn’t exist or may have moved. Check the address, or pick a route below to get back on track.</p>
+          <div class="actions">
+            <a class="button button-light" href="/">Back to home</a>
+            <a class="button button-ghost" href="/contact">Contact us</a>
+          </div>
+        </div>
+        <p class="not-found-code" aria-hidden="true">404</p>
+      </div>
+
+      <div class="wrap">
+        <nav class="not-found-links" aria-label="Popular pages">
+          <a href="/#solutions"><b>Products</b><span>Firewall, SD-WAN and access control</span></a>
+          <a href="/products/fusionm"><b>FusionM</b><span>Our centralised network controller</span></a>
+          <a href="/resources/knowledge-base"><b>Resources</b><span>Knowledge base and troubleshooting</span></a>
+          <a href="/demo"><b>Schedule a demo</b><span>See Bytescreen in action</span></a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+<%- include("partials/footer") %>

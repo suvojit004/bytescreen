@@ -1,0 +1,208 @@
+<%- include("partials/header") %>
+<%- include("partials/nav") %>
+
+<%
+  const { basicInfo, hero, overview, features, benefits, models, resources, faq, cta } = product;
+  const hasItems = (section) => section && section.items && section.items.length > 0;
+
+  const resourceLabels = {
+    datasheet: "Datasheet",
+    brochure: "Brochure",
+    guide: "Guide",
+    firmware: "Firmware",
+    video: "Video",
+    other: "Resource",
+  };
+
+  // Hero falls back to basic info, and to a demo button when no buttons are set
+  const heroTitle = (hero && hero.title) || basicInfo.productName;
+  const heroIntro = (hero && hero.description) || basicInfo.shortDescription;
+  const heroButtons = hero && hero.buttons && hero.buttons.length
+    ? hero.buttons
+    : [{ label: "Schedule a demo", url: demoUrl }].concat(resources.length ? [{ label: "View resources", url: "#resources" }] : []);
+%>
+  <main id="main">
+    <!-- 1. Hero -->
+    <section class="page-hero product-hero" id="top">
+      <% if (hero && hero.backgroundImage) { %>
+        <%- include("partials/media", { media: hero.backgroundImage, className: "product-hero-media", eager: true }) %>
+        <div class="product-hero-shade" aria-hidden="true"></div>
+      <% } %>
+      <div class="wrap">
+        <p class="kicker"><%= basicInfo.category || "Products" %></p>
+        <h1><%= heroTitle %></h1>
+        <% if (hero && hero.subtitle) { %>
+        <p class="product-subtitle"><%= hero.subtitle %></p>
+        <% } %>
+        <% if (heroIntro) { %>
+        <p class="lead"><%= heroIntro %></p>
+        <% } %>
+        <%- include("partials/buttons", { buttons: heroButtons, light: true }) %>
+      </div>
+    </section>
+
+    <!-- 2. Overview -->
+    <% if (overview) { %>
+    <section class="section product-overview" id="overview">
+      <div class="wrap overview-grid">
+        <div>
+          <p class="eyebrow">Overview</p>
+          <h2><%= overview.title %></h2>
+          <% if (overview.description) { %>
+          <p class="intro overview-text"><%= overview.description %></p>
+          <% } %>
+          <%- include("partials/buttons", { buttons: overview.buttons }) %>
+        </div>
+        <% if (overview.image) { %>
+        <figure class="overview-media">
+          <%- include("partials/media", { media: overview.image }) %>
+        </figure>
+        <% } %>
+      </div>
+    </section>
+    <% } %>
+
+    <!-- 3. Features -->
+    <% if (hasItems(features)) { %>
+    <section class="section product-features" id="features">
+      <div class="wrap">
+        <div class="section-head">
+          <h2><%= features.title %></h2>
+          <% if (features.description) { %><p class="intro"><%= features.description %></p><% } %>
+        </div>
+        <ul class="feature-grid">
+          <% features.items.forEach((item) => { %>
+          <li class="feature-card">
+            <% if (item.image) { %>
+            <div class="feature-media"><%- include("partials/media", { media: item.image }) %></div>
+            <% } %>
+            <h3><%= item.title %></h3>
+            <% if (item.description) { %><p><%= item.description %></p><% } %>
+            <% (item.buttons || []).forEach((button) => { %>
+            <a class="textlink" href="<%= button.url %>"><%= button.label %></a>
+            <% }) %>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </section>
+    <% } %>
+
+    <!-- 4. Benefits -->
+    <% if (hasItems(benefits)) { %>
+    <section class="section product-benefits" id="benefits">
+      <div class="wrap">
+        <div class="section-head">
+          <h2><%= benefits.title %></h2>
+          <% if (benefits.description) { %><p class="intro"><%= benefits.description %></p><% } %>
+        </div>
+        <ul class="benefit-list">
+          <% benefits.items.forEach((item) => { %>
+          <li class="benefit">
+            <h3><%= item.title %></h3>
+            <% if (item.description) { %><p><%= item.description %></p><% } %>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </section>
+    <% } %>
+
+    <!-- 5. Why choose (shared) -->
+    <%- include("partials/why-choose") %>
+
+    <!-- 6. Models -->
+    <% if (hasItems(models)) { %>
+    <section class="section product-models" id="models">
+      <div class="wrap">
+        <div class="section-head">
+          <h2><%= models.title %></h2>
+          <% if (models.description) { %><p class="intro"><%= models.description %></p><% } %>
+        </div>
+        <ul class="model-grid">
+          <% models.items.forEach((model) => { %>
+          <li class="model-card">
+            <div class="model-media"><%- include("partials/media", { media: model.image }) %></div>
+            <div class="model-body">
+              <h3><%= model.title %></h3>
+              <% if (model.description) { %><p><%= model.description %></p><% } %>
+              <% if (model.specs && model.specs.length) { %>
+              <dl class="spec-table">
+                <% model.specs.forEach((spec) => { %>
+                <div><dt><%= spec.label %></dt><dd><%= spec.value %></dd></div>
+                <% }) %>
+              </dl>
+              <% } %>
+              <% (model.buttons || []).forEach((button) => { %>
+              <a class="textlink" href="<%= button.url %>"><%= button.label %></a>
+              <% }) %>
+            </div>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </section>
+    <% } %>
+
+    <!-- 7. Resources -->
+    <% if (resources.length) { %>
+    <section class="section product-resources" id="resources">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Resources</h2>
+          <p class="intro">Datasheets, brochures and guides for <%= basicInfo.productName %>.</p>
+        </div>
+        <ul class="resource-list">
+          <% resources.forEach((resource) => { %>
+          <li>
+            <a class="resource" href="<%= resource.url %>" target="_blank" rel="noopener">
+              <span class="resource-type"><%= resourceLabels[resource.type] || "Resource" %></span>
+              <span class="resource-text">
+                <b><%= resource.title %></b>
+                <% if (resource.model || resource.description) { %>
+                <span><%= [resource.model, resource.description].filter(Boolean).join(" · ") %></span>
+                <% } %>
+              </span>
+              <span class="resource-action"><%= resource.type === "video" ? "Watch" : "Download" %></span>
+            </a>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </section>
+    <% } %>
+
+    <!-- 8. FAQ -->
+    <% if (faq.length) { %>
+    <section class="section product-faq" id="faq">
+      <div class="wrap faq-grid">
+        <h2>Frequently asked questions</h2>
+        <div class="faq-list">
+          <% faq.forEach((item) => { %>
+          <details class="faq-item">
+            <summary><%= item.question %></summary>
+            <p><%= item.answer %></p>
+          </details>
+          <% }) %>
+        </div>
+      </div>
+    </section>
+    <% } %>
+
+    <!-- 9. CTA (falls back to a demo CTA) -->
+    <section class="cta">
+      <div class="wrap cta-inner">
+        <div class="cta-copy">
+          <h2><%= (cta && cta.title) || `See ${basicInfo.productName} in action.` %></h2>
+          <p><%= (cta && cta.description) || "Book a live walkthrough with our team and see how it fits your network." %></p>
+        </div>
+        <div class="cta-actions">
+          <% const ctaButton = (cta && cta.button) || { label: "Schedule a demo", url: demoUrl }; %>
+          <a class="button button-light" href="<%= ctaButton.url %>"><%= ctaButton.label %></a>
+          <a class="cta-phone" href="tel:+918369071774">or call +91 836 907 1774</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+<%- include("partials/footer") %>

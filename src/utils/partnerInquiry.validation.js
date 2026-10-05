@@ -1,4 +1,5 @@
 const z = require("zod");
+const { PRODUCT } = require("../constants/product");
 
 const createPartnerInquirySchema = z.object({
     fullName: z
@@ -32,11 +33,7 @@ const createPartnerInquirySchema = z.object({
       .or(z.literal("").transform(() => undefined)),
 
     interest: z
-      .enum([
-        "FireWall",
-        "SD-WAN",
-        
-      ])
+      .enum(PRODUCT)
       .optional()
       .or(z.literal("").transform(() => undefined)),
 

@@ -1,0 +1,11 @@
+<%#
+  Renders a list of { label, url } buttons; the first is the primary button.
+  Locals: buttons, light (optional: white primary button, for dark sections)
+%>
+<% if (buttons && buttons.length) { %>
+<div class="actions">
+  <% buttons.forEach((button, i) => { %>
+  <a class="button<%= i === 0 ? (locals.light ? ' button-light' : '') : (locals.light ? ' button-ghost' : ' button-outline') %>" href="<%= button.url %>"><%= button.label %></a>
+  <% }) %>
+</div>
+<% } %>

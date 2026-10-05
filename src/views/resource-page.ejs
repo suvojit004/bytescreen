@@ -1,0 +1,40 @@
+<%- include("partials/header") %>
+<%- include("partials/nav") %>
+
+  <main id="main">
+    <!-- Page hero -->
+    <section class="page-hero" id="top">
+      <div class="wrap">
+        <p class="kicker">Resources · <%= page.name %></p>
+        <h1><%= page.heading %></h1>
+        <p class="lead"><%= page.intro %></p>
+      </div>
+    </section>
+
+    <!-- Placeholder until articles are added -->
+    <section class="section">
+      <div class="wrap coming-soon">
+        <div>
+          <p class="eyebrow">Coming soon</p>
+          <h2>We’re putting this section together.</h2>
+          <p class="intro">Articles will appear here shortly. In the meantime, our support team is available 24/7 to help with any question.</p>
+        </div>
+        <ul class="contact-list">
+          <li>
+            <span>Email support</span>
+            <a href="mailto:support@bytescreentech.com">support@bytescreentech.com</a>
+          </li>
+          <li>
+            <span>Call us</span>
+            <a href="tel:+918369071774">+91 836 907 1774</a>
+          </li>
+          <li>
+            <span>Already a customer?</span>
+            <a href="<%= controllerUrl %>">Log in to FusionM</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+<%- include("partials/footer") %>

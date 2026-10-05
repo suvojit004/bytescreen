@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { PRODUCT } = require("../constants/product");
 
 const partnerInquirySchema = new mongoose.Schema(
   {
@@ -41,10 +42,11 @@ const partnerInquirySchema = new mongoose.Schema(
 
     interest: {
       type: String,
+      // "SD-WAN" and "FireWall" are no longer offered, but kept so older enquiries stay valid
       enum: [
         "SD-WAN",
         "FireWall",
-        
+        ...PRODUCT,
       ],
       default: null,
     },

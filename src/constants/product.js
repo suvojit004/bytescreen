@@ -10,14 +10,25 @@ const MEDIA_TYPES = [
   "video",
 ];
 
+const RESOURCE_TYPES = [
+  "datasheet",
+  "brochure",
+  "guide",
+  "firmware",
+  "video",
+  "other",
+];
+
 const PRODUCT = [
-   "BT-Network Security",
+   "BT-NGFW",
    "BT-WAN",
-   "BT-NMS"
+   "BT-AAA",
+   "BT-Load Balancer"
 ]
 
 module.exports = {
   PRODUCT_STATUS,
   MEDIA_TYPES,
+  RESOURCE_TYPES,
   PRODUCT
 };

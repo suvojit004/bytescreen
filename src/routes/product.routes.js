@@ -12,12 +12,15 @@ const ProductController = require("../controllers/product.controller");
 const {
     ProductValidation,
     UpdateProductValidation,
+    ProductIdValidation,
 } = require("../models/product/validations/product.validation");
+
+// Admin API: every route needs a logged-in admin (drafts are visible here)
+router.use(protect, authorize("super_admin", "admin"));
 
 // Create Product
 router.post(
     "/",
-  
     validate(ProductValidation),
     ProductController.createProduct
 );
@@ -25,21 +28,20 @@ router.post(
 // Get All Products
 router.get(
     "/",
-  
     ProductController.getProducts
 );
 
 // Get Product By Id
 router.get(
     "/:productId",
- 
+    validate(ProductIdValidation, "params"),
     ProductController.getProductById
 );
 
 // Update Product
 router.put(
     "/:productId",
-  
+    validate(ProductIdValidation, "params"),
     validate(UpdateProductValidation),
     ProductController.updateProduct
 );
@@ -47,7 +49,7 @@ router.put(
 // Delete Product
 router.delete(
     "/:productId",
-   
+    validate(ProductIdValidation, "params"),
     ProductController.deleteProduct
 );
 

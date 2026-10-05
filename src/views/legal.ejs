@@ -1,0 +1,49 @@
+<%- include("partials/header") %>
+<%- include("partials/nav") %>
+
+  <main id="main">
+    <section class="page-hero legal-hero" id="top">
+      <div class="wrap">
+        <p class="kicker">Legal</p>
+        <h1><%= page.heading %></h1>
+        <p class="legal-updated">Last updated: <%= page.updated %></p>
+      </div>
+    </section>
+
+    <section class="section legal">
+      <div class="wrap legal-grid">
+        <nav class="legal-toc" aria-label="On this page">
+          <p class="legal-toc-title">On this page</p>
+          <ol>
+            <% page.sections.forEach((section) => { %>
+            <li><a href="#<%= section.id %>"><%= section.title %></a></li>
+            <% }) %>
+          </ol>
+        </nav>
+
+        <article class="legal-body">
+          <% if (page.draft) { %>
+          <p class="legal-draft" role="note"><b>Draft:</b> this page contains sample content and is not yet final.</p>
+          <% } %>
+          <p class="legal-intro"><%= page.intro %></p>
+
+          <% page.sections.forEach((section, i) => { %>
+          <section id="<%= section.id %>">
+            <h2><span><%= String(i + 1).padStart(2, "0") %></span><%= section.title %></h2>
+            <% section.body.forEach((block) => { %>
+              <% if (typeof block === "string") { %>
+              <p><%= block %></p>
+              <% } else if (block.list) { %>
+              <ul>
+                <% block.list.forEach((item) => { %><li><%= item %></li><% }) %>
+              </ul>
+              <% } %>
+            <% }) %>
+          </section>
+          <% }) %>
+        </article>
+      </div>
+    </section>
+  </main>
+
+<%- include("partials/footer") %>

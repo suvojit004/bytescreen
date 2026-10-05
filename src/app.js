@@ -1,4 +1,5 @@
 const path = require("path");
+const env = require("./config/env");
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -51,6 +52,12 @@ app.use((req, res, next) => {
     "Bytescreen helps Indian businesses secure, connect and manage their networks with next-generation firewall, SD-WAN and Network-as-a-Service.";
   res.locals.path = req.path;
   res.locals.year = new Date().getFullYear();
+  res.locals.controllerUrl = env.CONTROLLER_URL;
+  // Optional SEO extras (set by product pages)
+  res.locals.canonical = "";
+  res.locals.ogImage = "";
+  res.locals.noIndex = false;
+  res.locals.jsonLd = [];
   next();
 });
 

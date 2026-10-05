@@ -1,6 +1,6 @@
 <%#
   Sales / demo enquiry form, posted to the leads API (POST /leads).
-  Locals: products, inquiryTypes, successText, submitLabel, messageLabel
+  Locals: products, inquiryTypes, successText, submitLabel, messageLabel, selectedProduct (optional)
 %>
 <%
   const inquiryLabels = {
@@ -41,7 +41,7 @@
       <select id="product" name="product" required>
         <option value="">Select a product</option>
         <% products.forEach((product) => { %>
-        <option value="<%= product %>"><%= product %></option>
+        <option value="<%= product %>"<%= locals.selectedProduct === product ? " selected" : "" %>><%= product %></option>
         <% }) %>
       </select>
     </div>
@@ -58,6 +58,7 @@
     <label for="message"><%= messageLabel %> <abbr title="required">*</abbr></label>
     <textarea id="message" name="message" rows="5" required minlength="10"></textarea>
   </div>
+  <%- include("form-consent") %>
   <div class="form-foot">
     <button class="button" type="submit"><%= submitLabel %></button>
     <p class="form-status" role="status" aria-live="polite" data-form-status></p>

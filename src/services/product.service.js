@@ -1,18 +1,26 @@
 const Product = require("../models/product/product.model");
 const AppError = require("../utils/AppError");
 
+const DUPLICATE_KEY_ERROR = 11000;
+
+const duplicateKeyError = () =>
+    new AppError("Product key already exists.", 409);
+
 const createProduct = async (productData) => {
     const existingProduct = await Product.findOne({
         "basicInfo.productKey": productData.basicInfo.productKey,
     });
 
     if (existingProduct) {
-        throw new AppError("Product key already exists.", 409);
+        throw duplicateKeyError();
     }
 
-    const product = await Product.create(productData);
-
-    return product;
+    try {
+        return await Product.create(productData);
+    } catch (e) {
+        if (e.code === DUPLICATE_KEY_ERROR) throw duplicateKeyError();
+        throw e;
+    }
 };
 
 const getProducts = async (filter = {}, options = {}) => {
@@ -31,9 +39,11 @@ const getProductById = async (productId) => {
     return product;
 };
 
-const getProductByKey = async (productKey) => {
+// Website and public API: only published products are visible
+const getPublishedProductByKey = async (productKey) => {
     const product = await Product.findOne({
         "basicInfo.productKey": productKey.toLowerCase(),
+        status: "published",
     }).lean();
 
     if (!product) {
@@ -43,21 +53,27 @@ const getProductByKey = async (productKey) => {
     return product;
 };
 
+// Sections are replaced as a whole; fields not sent are left unchanged
 const updateProduct = async (productId, updateData) => {
-    const product = await Product.findByIdAndUpdate(
-        productId,
-        { $set: updateData },
-        {
-            new: true,
-            runValidators: true,
+    try {
+        const product = await Product.findByIdAndUpdate(
+            productId,
+            { $set: updateData },
+            {
+                new: true,
+                runValidators: true,
+            }
+        );
+
+        if (!product) {
+            throw new AppError("Product not found.", 404);
         }
-    );
 
-    if (!product) {
-        throw new AppError("Product not found.", 404);
+        return product;
+    } catch (e) {
+        if (e.code === DUPLICATE_KEY_ERROR) throw duplicateKeyError();
+        throw e;
     }
-
-    return product;
 };
 
 const deleteProduct = async (productId) => {
@@ -75,7 +91,7 @@ module.exports = {
     createProduct,
     getProducts,
     getProductById,
-    getProductByKey,
+    getPublishedProductByKey,
     updateProduct,
     deleteProduct,
 };

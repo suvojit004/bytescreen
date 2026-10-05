@@ -1,4 +1,4 @@
-const { cleanEnv, str, port } = require("envalid");
+const { cleanEnv, str, port, url } = require("envalid");
 
 const env = cleanEnv(process.env, {
   NODE_ENV: str({
@@ -8,6 +8,10 @@ const env = cleanEnv(process.env, {
     default: 3000,
   }),
   MONGO_URI: str(),
+  // FusionM centralised controller (target of the "Controller login" button)
+  CONTROLLER_URL: url({
+    default: "https://fusionm.bytescreentech.com",
+  }),
 });
 
 module.exports = env;

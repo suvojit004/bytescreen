@@ -34,6 +34,43 @@
     });
   }
 
+  /* ---------- Nav dropdowns (Products) ---------- */
+  const dropdowns = document.querySelectorAll('[data-dropdown]');
+
+  function setDropdown(dropdown, open) {
+    const button = dropdown.querySelector('[data-dropdown-toggle]');
+    button.setAttribute('aria-expanded', String(open));
+    dropdown.classList.toggle('is-open', open);
+  }
+
+  dropdowns.forEach((dropdown) => {
+    const button = dropdown.querySelector('[data-dropdown-toggle]');
+    button.addEventListener('click', () => {
+      const open = button.getAttribute('aria-expanded') !== 'true';
+      dropdowns.forEach((other) => { if (other !== dropdown) setDropdown(other, false); });
+      setDropdown(dropdown, open);
+    });
+    // Close when keyboard focus moves out of the dropdown
+    dropdown.addEventListener('focusout', (e) => {
+      if (!dropdown.contains(e.relatedTarget)) setDropdown(dropdown, false);
+    });
+  });
+
+  // Close on outside click or Escape
+  document.addEventListener('click', (e) => {
+    dropdowns.forEach((dropdown) => { if (!dropdown.contains(e.target)) setDropdown(dropdown, false); });
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    dropdowns.forEach((dropdown) => {
+      if (dropdown.classList.contains('is-open')) {
+        setDropdown(dropdown, false);
+        const button = dropdown.querySelector('[data-dropdown-toggle]');
+        if (button.offsetParent) button.focus(); // skip if the mobile menu just closed around it
+      }
+    });
+  });
+
   /* ---------- Header background + mobile demo button on scroll ---------- */
   const header = document.querySelector('[data-header]');
   const mobileDemo = document.querySelector('.mobile-demo');

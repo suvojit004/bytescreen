@@ -3,6 +3,18 @@ const { z } = require("zod");
 const MediaValidation = require("./media.validation");
 const ButtonValidation = require("./button.validation");
 
+const SpecValidation = z.object({
+  label: z
+    .string()
+    .trim()
+    .min(1),
+
+  value: z
+    .string()
+    .trim()
+    .min(1)
+});
+
 const ModelItemValidation = z.object({
   title: z
     .string()
@@ -16,10 +28,9 @@ const ModelItemValidation = z.object({
 
   image: MediaValidation,
 
-  datasheetUrl: z
-    .string()
-    .trim()
-    .optional(),
+  specs: z
+    .array(SpecValidation)
+    .default([]),
 
   buttons: z
     .array(ButtonValidation)

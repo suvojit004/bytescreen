@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
+const { RESOURCE_TYPES } = require("../../../constants/product");
 
 const ResourceSchema = new Schema(
   {
@@ -18,22 +19,21 @@ const ResourceSchema = new Schema(
 
     type: {
       type: String,
-      enum: [
-        "pdf",
-        "brochure",
-        "whitepaper",
-        "video",
-        "firmware",
-        "guide",
-        "other",
-      ],
-      default: "pdf",
+      enum: RESOURCE_TYPES,
+      required: true,
     },
 
     url: {
       type: String,
       required: true,
       trim: true,
+    },
+
+    // Optional: the model this file belongs to (e.g. a model's datasheet)
+    model: {
+      type: String,
+      trim: true,
+      default: "",
     },
   },
   {

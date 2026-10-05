@@ -6,23 +6,29 @@ const connectProduct = (product) => {
 
         basicInfo: product.basicInfo,
 
+        status: product.status,
+
+        seo: product.seo,
+
         hero: product.hero,
 
         overview: product.overview,
 
         features: product.features,
 
-        howItWorks: product.howItWorks,
+        benefits: product.benefits,
 
         models: product.models,
 
-        resources: product.resources,
+        resources: product.resources || [],
 
-        faq: product.faq,
+        faq: product.faq || [],
 
-        seo: product.seo,
+        cta: product.cta,
 
-        status: product.status,
+        createdAt: product.createdAt,
+
+        updatedAt: product.updatedAt,
     };
 };
 

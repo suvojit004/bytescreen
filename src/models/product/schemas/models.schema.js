@@ -5,6 +5,27 @@ const { Schema } = mongoose;
 
 const ButtonSchema = require("./button.schema");
 const MediaSchema = require("./media.schema");
+
+// One row of a model's spec table, e.g. { label: "Throughput", value: "10 Gbps" }
+const SpecSchema = new Schema(
+  {
+    label: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
+    value: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+  },
+  {
+    _id: false,
+  }
+);
+
 const ModelItemSchema = new Schema(
   {
     title: {
@@ -24,10 +45,9 @@ const ModelItemSchema = new Schema(
       required: true,
     },
 
-    datasheetUrl: {
-      type: String,
-      trim: true,
-      default: "",
+    specs: {
+      type: [SpecSchema],
+      default: [],
     },
 
     buttons: {

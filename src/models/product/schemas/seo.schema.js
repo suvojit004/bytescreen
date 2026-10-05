@@ -16,15 +16,17 @@ const SEOSchema = new Schema(
       default: "",
     },
 
-    keywords: {
-      type: [String],
-      default: [],
-    },
-
-    canonical: {
+    // Image shown when the page is shared on social media
+    ogImage: {
       type: String,
       trim: true,
       default: "",
+    },
+
+    // Keep the page out of search results
+    noIndex: {
+      type: Boolean,
+      default: false,
     },
   },
   {

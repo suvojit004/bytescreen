@@ -9,10 +9,6 @@
     distributor: "Distributor",
     other: "Other",
   };
-  const interestLabels = {
-    FireWall: "Firewall (network security)",
-    "SD-WAN": "SD-WAN",
-  };
 %>
   <main id="main">
     <!-- Page hero -->
@@ -110,7 +106,7 @@
               <select id="interest" name="interest">
                 <option value="">Select a solution</option>
                 <% interests.forEach((interest) => { %>
-                <option value="<%= interest %>"><%= interestLabels[interest] || interest %></option>
+                <option value="<%= interest %>"><%= interest %></option>
                 <% }) %>
               </select>
             </div>
@@ -127,6 +123,7 @@
           </div>
           <input type="hidden" name="formLoadedAt" />
 
+          <%- include("partials/form-consent") %>
           <div class="form-foot">
             <button class="button" type="submit">Send enquiry</button>
             <p class="form-status" role="status" aria-live="polite" data-form-status></p>

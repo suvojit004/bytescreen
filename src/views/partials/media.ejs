@@ -1,0 +1,11 @@
+<%#
+  Renders a product Media field ({ type, url, thumbnail, alt }) as an image or video.
+  Locals: media, className (optional), eager (optional: load immediately, for the hero)
+%>
+<% if (media && media.url) { %>
+<% if (media.type === "video") { %>
+<video class="<%= locals.className || '' %>" src="<%= media.url %>"<% if (media.thumbnail) { %> poster="<%= media.thumbnail %>"<% } %> autoplay muted loop playsinline aria-label="<%= media.alt || '' %>"></video>
+<% } else { %>
+<img class="<%= locals.className || '' %>" src="<%= media.url %>" alt="<%= media.alt || '' %>"<% if (!locals.eager) { %> loading="lazy"<% } %> />
+<% } %>
+<% } %>

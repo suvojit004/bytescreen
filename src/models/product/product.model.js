@@ -2,16 +2,18 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 const {PRODUCT_STATUS} = require('../../constants/product')
+const BasicInfoSchema = require("./schemas/basicInfo.schema");
+const SEOSchema = require("./schemas/seo.schema");
 const HeroSchema = require("./schemas/hero.schema");
 const OverviewSchema = require("./schemas/overview.schema");
 const FeaturesSchema = require("./schemas/features.schema");
-const HowItWorksSchema = require("./schemas/howItWorks.schema");
 const ModelsSchema = require("./schemas/models.schema");
 const ResourceSchema = require("./schemas/resource.schema");
 const FAQSchema = require("./schemas/faq.schema");
-const SEOSchema = require("./schemas/seo.schema");
-const BasicInfoSchema = require("./schemas/basicInfo.schema");
+const CTASchema = require("./schemas/cta.schema");
 
+// Page order: Hero → Overview → Features → Benefits → Why choose (shared, not stored)
+// → Models → Resources → FAQ → CTA. Empty sections are not shown on the page.
 const ProductSchema = new Schema(
   {
     basicInfo:{
@@ -19,13 +21,25 @@ const ProductSchema = new Schema(
       required: true
     } ,
 
+    status: {
+      type: String,
+      enum: PRODUCT_STATUS,
+      default: "draft",
+    },
+
+    seo: {
+      type: SEOSchema,
+      default: () => ({}),
+    },
+
     hero: HeroSchema,
 
     overview: OverviewSchema,
 
     features: FeaturesSchema,
 
-    howItWorks: HowItWorksSchema,
+    // Same shape as features: title, description, items
+    benefits: FeaturesSchema,
 
     models: ModelsSchema,
 
@@ -39,13 +53,7 @@ const ProductSchema = new Schema(
       default: [],
     },
 
-    seo: SEOSchema,
-
-    status: {
-      type: String,
-      enum: PRODUCT_STATUS,
-      default: "draft",
-    },
+    cta: CTASchema,
   },
   {
     timestamps: true,

@@ -11,14 +11,14 @@ const SEOValidation = z.object({
     .trim()
     .optional(),
 
-  keywords: z
-    .array(z.string().trim())
-    .default([]),
-
-  canonical: z
+  ogImage: z
     .string()
     .trim()
-    .optional()
+    .optional(),
+
+  noIndex: z
+    .boolean()
+    .default(false)
 });
 
 module.exports = SEOValidation;
