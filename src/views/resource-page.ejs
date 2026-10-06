@@ -5,13 +5,52 @@
     <!-- Page hero -->
     <section class="page-hero" id="top">
       <div class="wrap">
-        <p class="kicker">Resources · <%= page.name %></p>
+        <nav class="kicker breadcrumb" aria-label="Breadcrumb"><a href="/resources">Resources</a><span aria-hidden="true">/</span><span aria-current="page"><%= page.name %></span></nav>
         <h1><%= page.heading %></h1>
         <p class="lead"><%= page.intro %></p>
       </div>
     </section>
 
-    <!-- Placeholder until articles are added -->
+    <% if (documentGroups.length) { %>
+    <!-- Downloadable documents (read from src/public/resources/<folder>) -->
+    <% documentGroups.forEach((group) => { %>
+    <section class="section doc-section" id="<%= group.id %>">
+      <div class="wrap">
+        <div class="group-head">
+          <div>
+            <h2><%= group.title %></h2>
+            <% if (group.intro) { %><p class="intro doc-intro"><%= group.intro %></p><% } %>
+          </div>
+          <span class="group-count"><%= group.items.length %> <%= group.itemLabel || "document" %><%= group.items.length === 1 ? "" : "s" %></span>
+        </div>
+        <ul class="doc-grid">
+          <% group.items.forEach((doc) => { %>
+          <li>
+            <a class="doc-card" href="<%= doc.url %>" download="<%= doc.fileName %>">
+              <span class="doc-icon" aria-hidden="true">PDF</span>
+              <span class="doc-title"><%= doc.title %></span>
+              <span class="doc-action">Download<span class="sr-only"> <%= doc.title %> (PDF)</span></span>
+            </a>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </section>
+    <% }) %>
+
+    <!-- Support -->
+    <section class="section doc-help">
+      <div class="wrap coming-soon">
+        <div>
+          <p class="eyebrow">Need help?</p>
+          <h2>Can’t find what you’re looking for?</h2>
+          <p class="intro">Browse <a class="textlink-inline" href="/resources">all resources</a>, or contact our support team, available 24/7 to help with any question.</p>
+        </div>
+        <%- include("partials/support-contacts") %>
+      </div>
+    </section>
+    <% } else { %>
+    <!-- Placeholder until documents are added -->
     <section class="section">
       <div class="wrap coming-soon">
         <div>
@@ -19,22 +58,10 @@
           <h2>We’re putting this section together.</h2>
           <p class="intro">Articles will appear here shortly. In the meantime, our support team is available 24/7 to help with any question.</p>
         </div>
-        <ul class="contact-list">
-          <li>
-            <span>Email support</span>
-            <a href="mailto:support@bytescreentech.com">support@bytescreentech.com</a>
-          </li>
-          <li>
-            <span>Call us</span>
-            <a href="tel:+918369071774">+91 836 907 1774</a>
-          </li>
-          <li>
-            <span>Already a customer?</span>
-            <a href="<%= controllerUrl %>">Log in to FusionM</a>
-          </li>
-        </ul>
+        <%- include("partials/support-contacts") %>
       </div>
     </section>
+    <% } %>
   </main>
 
 <%- include("partials/footer") %>

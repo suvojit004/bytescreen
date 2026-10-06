@@ -43,7 +43,9 @@ app.use(
   })
 );
 app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, "public")));
+// redirect: false so folders like public/resources/troubleshooting don't hijack page URLs
+// such as /resources/troubleshooting (the static server would otherwise redirect to a trailing slash)
+app.use(express.static(path.join(__dirname, "public"), { redirect: false }));
 
 // Defaults shared by every rendered page; routes can override title/description
 app.use((req, res, next) => {

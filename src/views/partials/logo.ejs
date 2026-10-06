@@ -1,0 +1,11 @@
+<%#
+  Bytescreen logo lockup: badge + wordmark with the registered mark + tagline.
+  Locals: large (optional: bigger version, used in the footer)
+%>
+<a class="logo<%= locals.large ? ' logo-lg' : '' %>" href="/" aria-label="Bytescreen home">
+  <img class="logo-badge" src="/images/Bytescreen-Logo-badge.png" alt="" width="215" height="215"<%- locals.large ? ' loading="lazy"' : '' %> />
+  <span class="logo-text" aria-hidden="true">
+    <span class="logo-word">BYTESCREEN<span class="logo-reg">®</span></span>
+    <span class="logo-tagline">CONNECT <span>•</span> DETECT <span>•</span> PROTECT</span>
+  </span>
+</a>

@@ -1,0 +1,53 @@
+<%- include("partials/header") %>
+<%- include("partials/nav") %>
+
+<%
+  const plural = (count, word) => `${count} ${word}${count === 1 ? "" : "s"}`;
+  const totalDocuments = sections.reduce((sum, section) => sum + section.count, 0);
+%>
+  <main id="main">
+    <!-- Page hero -->
+    <section class="page-hero" id="top">
+      <div class="wrap">
+        <p class="kicker">Resources</p>
+        <h1>Everything you need to get more from Bytescreen.</h1>
+        <p class="lead">Configuration and troubleshooting guides, product brochures and datasheets, all in one place<%= totalDocuments ? ` — ${totalDocuments} documents to download` : "" %>.</p>
+      </div>
+    </section>
+
+    <!-- Resource categories -->
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Browse by type.</h2>
+          <p class="intro">Choose a category to see every document available in it.</p>
+        </div>
+        <ul class="resource-hub">
+          <% sections.forEach((section) => { %>
+          <li>
+            <a class="hub-card" href="/resources/<%= section.key %>">
+              <span class="hub-count"><%= section.count ? plural(section.count, section.itemLabel) : "Coming soon" %></span>
+              <h3><%= section.name %></h3>
+              <p><%= section.summary %></p>
+              <span class="hub-action">View <%= section.name.toLowerCase() %></span>
+            </a>
+          </li>
+          <% }) %>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Support -->
+    <section class="section doc-help">
+      <div class="wrap coming-soon">
+        <div>
+          <p class="eyebrow">Need help?</p>
+          <h2>Can’t find what you’re looking for?</h2>
+          <p class="intro">Our support team is available 24/7 to help with configuration, troubleshooting and any other question.</p>
+        </div>
+        <%- include("partials/support-contacts") %>
+      </div>
+    </section>
+  </main>
+
+<%- include("partials/footer") %>
