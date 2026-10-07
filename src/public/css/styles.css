@@ -158,6 +158,7 @@ p { margin: 0; }
 .navlinks .button:hover { background: #e4e8ff; }
 .navlinks .nav-login { background: transparent; color: var(--white); border-color: rgba(255, 255, 255, .45); margin-right: -12px; }
 .navlinks .nav-login:hover { background: rgba(255, 255, 255, .08); border-color: var(--white); }
+.dropdown-heading.dropdown-heading-first { margin-top: 0; padding-top: 4px; border-top: 0; }
 .dropdown-heading {
   margin: 6px 14px 0; padding-top: 12px; border-top: 1px solid var(--line-dark);
   font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .08em; color: rgba(255, 255, 255, .5);
@@ -680,8 +681,9 @@ a.support-card:hover { border-color: rgba(125, 141, 255, .6); }
 .product-hero .actions .button-ghost { color: var(--white); }
 
 .overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 80px); align-items: center; }
-.overview-text { margin: 20px 0 28px; max-width: 56ch; }
-.overview-media img, .overview-media video { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius); }
+.overview-text { display: grid; gap: 14px; margin: 20px 0 28px; max-width: 56ch; }
+/* Shown at its natural shape so diagrams and screenshots aren't cropped */
+.overview-media img, .overview-media video { width: 100%; height: auto; border-radius: var(--radius); }
 
 .product-features { background: var(--paper); }
 .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
@@ -712,16 +714,22 @@ a.support-card:hover { border-color: rgba(125, 141, 255, .6); }
 .why-choose-grid b { font-family: var(--font-display); font-variation-settings: "wdth" 112; font-size: 1.15rem; }
 .why-choose-grid span { font-size: 0.95rem; color: rgba(255, 255, 255, .68); }
 
-.model-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+/* Two models per row on larger screens so the product photos get room */
+.model-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
 .model-card { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background: var(--white); }
-.model-media { display: grid; place-items: center; height: 220px; padding: 24px; background: var(--paper); }
-.model-media img, .model-media video { max-width: 100%; max-height: 100%; object-fit: contain; }
+/* White behind the photos (which have white backgrounds) so they blend in without a visible box */
+.model-media { display: grid; place-items: center; height: clamp(240px, 26vw, 340px); padding: 28px; background: var(--white); border-bottom: 1px solid var(--line); }
+.model-media img, .model-media video { width: 100%; height: 100%; object-fit: contain; }
 .model-body { display: flex; flex-direction: column; gap: 12px; padding: 24px 28px 28px; flex: 1; }
 .model-body > p { color: var(--steel); }
+/* Buttons sit at the bottom of every card, so they line up across the row */
+.model-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; margin-top: auto; padding-top: 16px; }
+.model-actions .button { width: 100%; }
 .spec-table { margin: 4px 0 0; border-top: 1px solid var(--line); }
-.spec-table div { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 0.93rem; }
-.spec-table dt { color: var(--steel); }
-.spec-table dd { margin: 0; font-weight: 600; text-align: right; }
+/* One spec per row: label on the left, value on the right */
+.spec-table div { display: flex; justify-content: space-between; align-items: baseline; gap: 24px; padding: 11px 0; border-bottom: 1px solid var(--line); }
+.spec-table dt { flex: none; font-size: 0.9rem; color: var(--steel); }
+.spec-table dd { margin: 0; font-size: 0.95rem; font-weight: 600; color: var(--text); text-align: right; }
 
 .product-resources { background: var(--paper); }
 .resource-list { display: grid; gap: 10px; }
@@ -938,6 +946,7 @@ a.support-card:hover { border-color: rgba(125, 141, 255, .6); }
   .pillars { grid-template-columns: repeat(3, 1fr); }
   .contact-grid, .support-help, .office-grid { grid-template-columns: 1fr; }
   .overview-grid, .faq-grid, .coming-soon { grid-template-columns: 1fr; }
+  .model-grid { grid-template-columns: repeat(2, 1fr); }
   .legal-grid { grid-template-columns: 1fr; }
   .legal-toc { position: static; }
   .not-found-inner { grid-template-columns: 1fr; }
@@ -982,6 +991,9 @@ a.support-card:hover { border-color: rgba(125, 141, 255, .6); }
   .product-hero { min-height: auto; }
   .facts-3 { grid-template-columns: 1fr; }
   .doc-grid { grid-template-columns: 1fr; }
+  .model-grid { grid-template-columns: 1fr; }
+  .spec-table div { display: grid; gap: 2px; }
+  .spec-table dd { text-align: left; }
   .certs { grid-template-columns: 1fr; }
   .facts-3 .fact:nth-child(n + 2) { border-left: 0; border-top: 1px solid var(--line-dark); }
   .customer-grid { grid-template-columns: repeat(2, 1fr); }

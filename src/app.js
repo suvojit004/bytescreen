@@ -16,6 +16,7 @@ const partnerInquiryRoutes = require("./routes/partnerInquiry.route")
 const productRoutes = require("./routes/product.routes")
 const productPublicRoutes = require("./routes/product.public.routes")
 const webRoutes = require("./routes/web.routes");
+const { getNavProducts } = require("./services/navigation.service");
 
 const notFound = require(
   "./middlewares/notFound.middleware"
@@ -60,6 +61,13 @@ app.use((req, res, next) => {
   res.locals.ogImage = "";
   res.locals.noIndex = false;
   res.locals.jsonLd = [];
+  next();
+});
+
+// Products for the nav dropdown (published products, cached; see navigation.service)
+app.use(async (req, res, next) => {
+  if (req.method !== "GET") return next();
+  res.locals.navMenu = await getNavProducts();
   next();
 });
 

@@ -1,0 +1,112 @@
+{
+  "basicInfo": {
+    "productName": "BT-WAN",
+    "productKey": "bt-wan",
+    "category": "Connectivity",
+    "shortDescription": "Intelligent SD-WAN that delivers reliable, high-performance connectivity across branch offices, data centres and cloud environments.",
+    "navGroup": "products",
+    "sortOrder": 2
+  },
+  "status": "published",
+  "seo": {
+    "title": "BT-WAN SD-WAN | Intelligent Wide Area Networking | Bytescreen",
+    "description": "Bytescreen SD-WAN uses centralised control and application-aware routing to deliver reliable, high-performance connectivity across branches, data centres and cloud.",
+    "noIndex": false
+  },
+  "hero": {
+    "title": "BT-WAN",
+    "subtitle": "Intelligent SD-WAN for every site",
+    "description": "Reliable, high-performance connectivity across branch offices, data centres and cloud environments, with centralised control and application-aware routing.",
+    "backgroundImage": {
+      "type": "image",
+      "url": "/images/offer-connectivity.png",
+      "alt": "Office buildings connected by network links"
+    },
+    "buttons": [
+      { "label": "Schedule a demo", "url": "/demo?product=BT-WAN" },
+      { "label": "Download brochure", "url": "/resources/brochure/BT-WAN-BROCHURE-V1.pdf" }
+    ]
+  },
+  "overview": {
+    "title": "Smarter connectivity across your entire network.",
+    "description": "Bytescreen SD-WAN is an intelligent wide area networking solution designed to deliver reliable, high-performance connectivity across branch offices, data centres, and cloud environments. It uses centralised control and application-aware routing to dynamically steer traffic over the most efficient network paths, ensuring consistent performance for business-critical applications.\n\nBy abstracting network control from underlying transport links such as MPLS, broadband, and 4G/5G, Bytescreen SD-WAN simplifies WAN management while improving agility, visibility, and scalability. It enables organizations to adapt their network in real time as business needs evolve, supporting seamless cloud adoption and future growth.",
+    "image": {
+      "type": "image",
+      "url": "/images/products/bt-wan.png",
+      "alt": "Bytescreen SD-WAN architecture: FusionMaestro centralised management connected over TLS 1.3 to a Bytescreen appliance, with AES-256 encrypted, aggregated SD-WAN tunnels to three branch offices over P2P, MPLS, ILL, broadband and LTE 4G/5G links"
+    },
+    "buttons": []
+  },
+  "features": {
+    "title": "Features",
+    "description": "",
+    "items": [
+      {
+        "title": "Robust Threat Detection",
+        "description": "Identify and neutralize potential threats proactively.",
+        "buttons": []
+      },
+      {
+        "title": "User-Friendly Policy Management",
+        "description": "Easily manage security policies with an intuitive interface.",
+        "buttons": []
+      },
+      {
+        "title": "Real-time Security Updates",
+        "description": "Stay ahead with immediate updates to shield against emerging threats.",
+        "buttons": []
+      }
+    ]
+  },
+  "benefits": {
+    "title": "Why Bytescreen Tech SD-WAN",
+    "description": "",
+    "items": [
+      {
+        "title": "Zero Touch Provisioning",
+        "description": "Rapid deployment with minimal on-site configuration.",
+        "buttons": []
+      },
+      {
+        "title": "WAN Optimisation",
+        "description": "Improved application performance and higher productivity through intelligent traffic steering.",
+        "buttons": []
+      },
+      {
+        "title": "Multi-Hybrid Internet Support",
+        "description": "Seamless use of MPLS, broadband, and 4G/5G links for redundancy and resilience.",
+        "buttons": []
+      },
+      {
+        "title": "Advanced Security",
+        "description": "Built-in protection with features such as domain filtering and SSL inspection.",
+        "buttons": []
+      },
+      {
+        "title": "PMTA (Packet-Based Multi-Session Tunnel Aggregation)",
+        "description": "Aggregates multiple WAN links at the packet level to maximise bandwidth utilisation and ensure stable performance even under varying network conditions.",
+        "buttons": []
+      },
+      {
+        "title": "MPMD (Multi-Path Multi-Directional Data Flow)",
+        "description": "Enables simultaneous, bi-directional traffic flow across multiple paths for faster data transfer, reduced latency, and improved application responsiveness.",
+        "buttons": []
+      }
+    ]
+  },
+  "resources": [
+    {
+      "title": "BT-WAN Brochure",
+      "description": "Overview of Bytescreen SD-WAN features and capabilities",
+      "type": "brochure",
+      "url": "/resources/brochure/BT-WAN-BROCHURE-V1.pdf"
+    },
+    {
+      "title": "PMTA: Packet-Based Multi-Session Tunnel Aggregation",
+      "description": "How BT-WAN aggregates multiple WAN links at the packet level",
+      "type": "brochure",
+      "url": "/resources/brochure/PMTA.pdf"
+    }
+  ],
+  "faq": []
+}

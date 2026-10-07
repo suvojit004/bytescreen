@@ -1,14 +1,10 @@
 <%
-  // Products shown in the nav dropdown; each links to /products/<key>
-  const navProducts = [
-    { name: "BT-NGFW", key: "bt-ngfw", summary: "Next-generation firewall" },
-    { name: "BT-WAN", key: "bt-wan", summary: "SD-WAN connectivity across sites" },
-    { name: "BT-AAA", key: "bt-aaa", summary: "Authentication, authorisation and accounting" },
-  ];
-  // Shown under a separate "Platform" heading in the same dropdown
-  const navPlatform = [
-    { name: "FusionM", key: "fusionm", summary: "Centralised controller for every device" },
-  ];
+  // Products dropdown: published products from the database (see services/navigation.service.js).
+  // Each product's basicInfo.navGroup puts it under "Products" or "Platform"; sortOrder sets the order.
+  const navMenu = locals.navMenu || { products: [], platform: [] };
+  const navProducts = navMenu.products;
+  const navPlatform = navMenu.platform;
+  const hasNavProducts = navProducts.length + navPlatform.length > 0;
   const onProductPage = path.startsWith("/products/");
 
   // Resources dropdown; each links to /resources/<key>
@@ -28,6 +24,7 @@
         <span class="sr-only">Menu</span>
       </button>
       <nav class="navlinks" id="site-nav" aria-label="Main">
+        <% if (hasNavProducts) { %>
         <div class="nav-dropdown" data-dropdown>
           <button class="dropdown-toggle<%= onProductPage ? ' is-current' : '' %>" type="button" aria-expanded="false" aria-controls="products-menu" data-dropdown-toggle>
             Products<span class="caret" aria-hidden="true"></span>
@@ -35,7 +32,7 @@
           <ul class="dropdown-menu" id="products-menu">
             <% navProducts.concat(navPlatform).forEach((product, i) => { %>
             <% if (i === navProducts.length) { %>
-            <li class="dropdown-heading" aria-hidden="true">Platform</li>
+            <li class="dropdown-heading<%= navProducts.length ? '' : ' dropdown-heading-first' %>" aria-hidden="true">Platform</li>
             <% } %>
             <li>
               <a href="/products/<%= product.key %>"<%- path === "/products/" + product.key ? ' aria-current="page"' : "" %>>
@@ -46,6 +43,7 @@
             <% }) %>
           </ul>
         </div>
+        <% } %>
         <a href="/about"<%- path === "/about" ? ' aria-current="page"' : "" %>>Company</a>
         <a href="/customers"<%- path === "/customers" ? ' aria-current="page"' : "" %>>Customers</a>
         <a href="/partner"<%- path === "/partner" ? ' aria-current="page"' : "" %>>Partners</a>

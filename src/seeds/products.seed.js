@@ -21,6 +21,8 @@ const DEMO_PRODUCTS = [
     basicInfo: {
       productName: "BT-NGFW",
       productKey: "bt-ngfw",
+      navGroup: "products",
+      sortOrder: 1,
       category: "Network security",
       shortDescription: "Next-generation firewall that protects every edge of your network.",
     },
@@ -116,6 +118,8 @@ const DEMO_PRODUCTS = [
     basicInfo: {
       productName: "BT-WAN",
       productKey: "bt-wan",
+      navGroup: "products",
+      sortOrder: 2,
       category: "Connectivity",
       shortDescription: "SD-WAN that keeps every site connected, fast and secure.",
     },
@@ -166,6 +170,8 @@ const DEMO_PRODUCTS = [
     basicInfo: {
       productName: "FusionM",
       productKey: "fusionm",
+      navGroup: "platform",
+      sortOrder: 1,
       category: "Centralised network controller",
       shortDescription: "Manage every Bytescreen firewall, WAN and access device from one place.",
     },
@@ -222,6 +228,8 @@ const DEMO_PRODUCTS = [
     basicInfo: {
       productName: "BT-AAA",
       productKey: "bt-aaa",
+      navGroup: "products",
+      sortOrder: 3,
       category: "Access control",
       shortDescription: "Centralised authentication, authorisation and accounting for your network.",
     },

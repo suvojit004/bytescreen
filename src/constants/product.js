@@ -19,6 +19,12 @@ const RESOURCE_TYPES = [
   "other",
 ];
 
+// Where a product appears in the nav's Products dropdown
+const NAV_GROUPS = [
+  "products",
+  "platform",
+];
+
 const PRODUCT = [
    "BT-NGFW",
    "BT-WAN",
@@ -28,6 +34,7 @@ const PRODUCT = [
 
 module.exports = {
   PRODUCT_STATUS,
+  NAV_GROUPS,
   MEDIA_TYPES,
   RESOURCE_TYPES,
   PRODUCT

@@ -1,4 +1,5 @@
 const { z } = require("zod");
+const { NAV_GROUPS } = require("../../../constants/product");
 
 const BasicInfoValidation = z.object({
   productName: z
@@ -22,6 +23,15 @@ const BasicInfoValidation = z.object({
     .string()
     .trim()
     .max(250)
+    .optional(),
+
+  navGroup: z
+    .enum(NAV_GROUPS)
+    .optional(),
+
+  sortOrder: z
+    .number()
+    .int()
     .optional()
 });
 

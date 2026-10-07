@@ -49,7 +49,11 @@
           <p class="eyebrow">Overview</p>
           <h2><%= overview.title %></h2>
           <% if (overview.description) { %>
-          <p class="intro overview-text"><%= overview.description %></p>
+          <div class="overview-text">
+            <% overview.description.split(/\n\s*\n/).forEach((paragraph) => { %>
+            <p class="intro"><%= paragraph.trim() %></p>
+            <% }) %>
+          </div>
           <% } %>
           <%- include("partials/buttons", { buttons: overview.buttons }) %>
         </div>
@@ -133,9 +137,14 @@
                 <% }) %>
               </dl>
               <% } %>
-              <% (model.buttons || []).forEach((button) => { %>
-              <a class="textlink" href="<%= button.url %>"><%= button.label %></a>
-              <% }) %>
+              <% if (model.buttons && model.buttons.length) { %>
+              <div class="model-actions">
+                <% model.buttons.forEach((button, i) => { %>
+                <% const isPdf = /\.pdf(\?|#|$)/i.test(button.url); %>
+                <a class="button button-sm<%= i === 0 ? '' : ' button-outline' %>" href="<%= button.url %>"<%- isPdf ? ' download' : '' %>><%= button.label %></a>
+                <% }) %>
+              </div>
+              <% } %>
             </div>
           </li>
           <% }) %>

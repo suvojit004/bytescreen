@@ -1,5 +1,6 @@
 const Product = require("../models/product/product.model");
 const AppError = require("../utils/AppError");
+const { clearNavCache } = require("./navigation.service");
 
 const DUPLICATE_KEY_ERROR = 11000;
 
@@ -16,7 +17,9 @@ const createProduct = async (productData) => {
     }
 
     try {
-        return await Product.create(productData);
+        const product = await Product.create(productData);
+        clearNavCache();
+        return product;
     } catch (e) {
         if (e.code === DUPLICATE_KEY_ERROR) throw duplicateKeyError();
         throw e;
@@ -60,7 +63,7 @@ const updateProduct = async (productId, updateData) => {
             productId,
             { $set: updateData },
             {
-                new: true,
+                returnDocument: "after",
                 runValidators: true,
             }
         );
@@ -69,6 +72,7 @@ const updateProduct = async (productId, updateData) => {
             throw new AppError("Product not found.", 404);
         }
 
+        clearNavCache();
         return product;
     } catch (e) {
         if (e.code === DUPLICATE_KEY_ERROR) throw duplicateKeyError();
@@ -83,6 +87,7 @@ const deleteProduct = async (productId) => {
         throw new AppError("Product not found.", 404);
     }
 
+    clearNavCache();
     return product;
 };
 
