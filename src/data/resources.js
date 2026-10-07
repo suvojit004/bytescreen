@@ -73,6 +73,38 @@ const RESOURCE_PAGES = {
       },
     ],
   },
+  whitepapers: {
+    name: "Whitepapers",
+    summary: "In-depth technical papers on the technology behind Bytescreen solutions.",
+    heading: "Go deeper into the technology.",
+    intro: "Technical whitepapers that explain how Bytescreen solutions work and the thinking behind them.",
+    description: "Download Bytescreen technical whitepapers on firewall technology and network security.",
+    documents: [
+      {
+        id: "technical-whitepapers",
+        title: "Technical whitepapers",
+        intro: "Detailed papers on Bytescreen technology and architecture.",
+        folder: "whitepaper",
+        itemLabel: "whitepaper",
+      },
+    ],
+  },
+  "support-documents": {
+    name: "Support documents",
+    summary: "Our RMA process, escalation matrix and other support procedures.",
+    heading: "How we support you.",
+    intro: "The processes and contacts behind Bytescreen support, from returns and replacements to escalating an issue.",
+    description: "Bytescreen support documents, including the RMA process and the escalation matrix.",
+    documents: [
+      {
+        id: "support-procedures",
+        title: "Support procedures",
+        intro: "Returns (RMA), escalation contacts and other support processes.",
+        folder: "other",
+        itemLabel: "document",
+      },
+    ],
+  },
 };
 
 module.exports = RESOURCE_PAGES;

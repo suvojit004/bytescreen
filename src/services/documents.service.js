@@ -7,7 +7,7 @@ const RESOURCES_DIR = path.join(__dirname, "..", "public", "resources");
 // Words kept in capitals when file names are written in ALL CAPS
 const ACRONYMS = new Set([
     "AAA", "ARP", "BT", "CIPS", "DHCP", "DNS", "FWAAS", "GEO", "IP", "LAN", "NAT", "NGFW",
-    "NMS", "PDF", "PPPOE", "SD", "SSL", "VPN", "WAN",
+    "NMS", "PDF", "PMTA", "PPPOE", "RMA", "SD", "SSL", "VPN", "WAN",
 ]);
 
 // ALL-CAPS words become Title Case unless they are acronyms or contain digits (e.g. "V1");

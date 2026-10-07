@@ -761,7 +761,9 @@ a.support-card:hover { border-color: rgba(125, 141, 255, .6); }
 .breadcrumb [aria-current] { color: var(--white); }
 .textlink-inline { color: var(--ink); font-weight: 600; text-decoration: underline; text-decoration-color: var(--signal); text-underline-offset: 3px; }
 
-.resource-hub { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+/* Flexible rows: up to three cards per row, and cards in a shorter last row stretch to fill it */
+.resource-hub { display: flex; flex-wrap: wrap; gap: 16px; }
+.resource-hub > li { flex: 1 1 320px; }
 .hub-card {
   display: flex; flex-direction: column; gap: 10px; height: 100%; padding: 28px;
   background: var(--white); border: 1px solid var(--line); border-top: 3px solid var(--ink); border-radius: var(--radius);
