@@ -17,9 +17,14 @@
   // Hero falls back to basic info, and to a demo button when no buttons are set
   const heroTitle = (hero && hero.title) || basicInfo.productName;
   const heroIntro = (hero && hero.description) || basicInfo.shortDescription;
-  const heroButtons = hero && hero.buttons && hero.buttons.length
+  const baseHeroButtons = hero && hero.buttons && hero.buttons.length
     ? hero.buttons
     : [{ label: "Schedule a demo", url: demoUrl }].concat(resources.length ? [{ label: "View resources", url: "#resources" }] : []);
+  // Every product hero also offers "Contact sales", unless the product already links to the Contact page
+  const hasContactButton = baseHeroButtons.some((button) => /^\/contact(\/|#|\?|$)/.test(button.url));
+  const heroButtons = hasContactButton
+    ? baseHeroButtons
+    : baseHeroButtons.concat([{ label: "Contact sales", url: "/contact#sales" }]);
 %>
   <main id="main">
     <!-- 1. Hero -->
@@ -45,21 +50,34 @@
     <% if (overview) { %>
     <section class="section product-overview" id="overview">
       <div class="wrap overview-grid">
-        <div>
-          <p class="eyebrow">Overview</p>
-          <h2><%= overview.title %></h2>
-          <% if (overview.description) { %>
-          <div class="overview-text">
-            <% overview.description.split(/\n\s*\n/).forEach((paragraph) => { %>
-            <p class="intro"><%= paragraph.trim() %></p>
-            <% }) %>
+        <!-- Row 1: heading on the left, text on the right -->
+        <div class="overview-copy">
+          <div>
+            <p class="eyebrow">Overview</p>
+            <h2><%= overview.title %></h2>
           </div>
-          <% } %>
-          <%- include("partials/buttons", { buttons: overview.buttons }) %>
+          <div>
+            <% if (overview.description) { %>
+            <div class="overview-text">
+              <% overview.description.split(/\n\s*\n/).forEach((paragraph) => { %>
+              <p class="intro"><%= paragraph.trim() %></p>
+              <% }) %>
+            </div>
+            <% } %>
+            <%- include("partials/buttons", { buttons: overview.buttons }) %>
+          </div>
         </div>
+        <!-- Row 2: the image at full width, so detailed diagrams stay readable -->
         <% if (overview.image) { %>
         <figure class="overview-media">
+          <% if (overview.image.type === "image") { %>
+          <a href="<%= overview.image.url %>" target="_blank" rel="noopener" title="Open the full-size image">
+            <%- include("partials/media", { media: overview.image }) %>
+          </a>
+          <figcaption>Select the image to view it at full size</figcaption>
+          <% } else { %>
           <%- include("partials/media", { media: overview.image }) %>
+          <% } %>
         </figure>
         <% } %>
       </div>

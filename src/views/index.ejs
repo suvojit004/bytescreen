@@ -30,27 +30,31 @@
           <h2>Built around the way your network works.</h2>
           <p class="intro">From branch connectivity to policy control, Bytescreen brings critical network services into one manageable, business-ready environment.</p>
         </div>
+        <%
+          // Solutions cards. "Explore" appears only when the product has a published page
+          // (published products come from the database via navMenu, the same list as the nav).
+          const solutions = [
+            { name: "BT-NGFW", key: "bt-ngfw", text: "Secure users, applications and network edges with next-generation firewall capabilities designed for evolving threats." },
+            { name: "BT-WAN", key: "bt-wan", text: "Deliver stable, high-performing connectivity across sites with intelligent routing and flexible WAN management." },
+            { name: "BT-AAA", key: "bt-aaa", text: "Control who gets on your network and what they can reach, with centralised authentication, authorisation and accounting." },
+            { name: "BT-Load Balancer", key: "bt-load-balancer", text: "Keep applications fast and available by distributing traffic intelligently, so no single link or server becomes a bottleneck." },
+          ];
+          const menu = locals.navMenu || { products: [], platform: [] };
+          const publishedKeys = new Set(menu.products.concat(menu.platform).map((product) => product.key));
+        %>
         <div class="services">
+          <% solutions.forEach((solution) => { %>
           <article class="service">
-            <h3>BT-NGFW</h3>
-            <p>Secure users, applications and network edges with next-generation firewall capabilities designed for evolving threats.</p>
-            <a class="textlink" href="mailto:sales@bytescreentech.com?subject=BT-NGFW%20enquiry">Ask about BT-NGFW</a>
+            <h3><%= solution.name %></h3>
+            <p><%= solution.text %></p>
+            <div class="service-actions">
+              <% if (publishedKeys.has(solution.key)) { %>
+              <a class="button button-sm" href="/products/<%= solution.key %>">Explore <%= solution.name %></a>
+              <% } %>
+              <a class="textlink" href="mailto:sales@bytescreentech.com?subject=<%= encodeURIComponent(solution.name + ' enquiry') %>">Ask about <%= solution.name %></a>
+            </div>
           </article>
-          <article class="service">
-            <h3>BT-WAN</h3>
-            <p>Deliver stable, high-performing connectivity across sites with intelligent routing and flexible WAN management.</p>
-            <a class="textlink" href="mailto:sales@bytescreentech.com?subject=BT-WAN%20enquiry">Ask about BT-WAN</a>
-          </article>
-          <article class="service">
-            <h3>BT-AAA</h3>
-            <p>Control who gets on your network and what they can reach, with centralised authentication, authorisation and accounting.</p>
-            <a class="textlink" href="mailto:sales@bytescreentech.com?subject=BT-AAA%20enquiry">Ask about BT-AAA</a>
-          </article>
-          <article class="service">
-            <h3>BT-Load Balancer</h3>
-            <p>Keep applications fast and available by distributing traffic intelligently, so no single link or server becomes a bottleneck.</p>
-            <a class="textlink" href="mailto:sales@bytescreentech.com?subject=BT-Load%20Balancer%20enquiry">Ask about BT-Load Balancer</a>
-          </article>
+          <% }) %>
         </div>
       </div>
     </section>

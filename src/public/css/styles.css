@@ -292,6 +292,9 @@ p { margin: 0; }
 .service { padding-right: 28px; }
 .service h3 { font-size: 1.45rem; margin-bottom: 14px; }
 .service p { color: var(--steel); }
+/* Card links sit together at the bottom of each card */
+.service-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: auto; padding-top: 22px; }
+.service-actions .textlink { margin-top: 0; padding-top: 0; }
 
 /* Demo */
 .demo { background: var(--night); color: var(--white); }
@@ -680,10 +683,17 @@ a.support-card:hover { border-color: rgba(125, 141, 255, .6); }
 .product-hero .lead { margin-bottom: 32px; }
 .product-hero .actions .button-ghost { color: var(--white); }
 
-.overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 6vw, 80px); align-items: center; }
-.overview-text { display: grid; gap: 14px; margin: 20px 0 28px; max-width: 56ch; }
-/* Shown at its natural shape so diagrams and screenshots aren't cropped */
-.overview-media img, .overview-media video { width: 100%; height: auto; border-radius: var(--radius); }
+/* Overview: text on one row, the image on its own full-width row below */
+.overview-grid { display: grid; gap: clamp(36px, 5vw, 56px); }
+.overview-copy { display: grid; grid-template-columns: .9fr 1.1fr; gap: 20px 64px; align-items: start; }
+.overview-text { display: grid; gap: 14px; margin-bottom: 24px; }
+.overview-media {
+  margin: 0; padding: clamp(12px, 2vw, 28px); background: var(--white);
+  border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 24px 48px -36px rgba(16, 22, 58, .45);
+}
+.overview-media a { display: block; cursor: zoom-in; }
+.overview-media img, .overview-media video { display: block; width: 100%; height: auto; border-radius: 4px; }
+.overview-media figcaption { margin-top: 12px; text-align: center; font-size: .85rem; color: var(--steel); }
 
 .product-features { background: var(--paper); }
 .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
@@ -945,7 +955,7 @@ a.support-card:hover { border-color: rgba(125, 141, 255, .6); }
   .facts-3 .fact:nth-child(n + 3) { border-top: 0; }
   .pillars { grid-template-columns: repeat(3, 1fr); }
   .contact-grid, .support-help, .office-grid { grid-template-columns: 1fr; }
-  .overview-grid, .faq-grid, .coming-soon { grid-template-columns: 1fr; }
+  .overview-copy, .faq-grid, .coming-soon { grid-template-columns: 1fr; }
   .model-grid { grid-template-columns: repeat(2, 1fr); }
   .legal-grid { grid-template-columns: 1fr; }
   .legal-toc { position: static; }

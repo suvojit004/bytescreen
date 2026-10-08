@@ -7,11 +7,19 @@
       </div>
       <div>
         <h4>Products</h4>
+        <%
+          // Published products from the database (same list as the nav's Products menu)
+          const footerMenu = locals.navMenu || { products: [], platform: [] };
+          const footerProducts = footerMenu.products.concat(footerMenu.platform);
+        %>
         <ul>
-          <li><a href="/#solutions">BT-NGFW</a></li>
-          <li><a href="/#solutions">BT-WAN</a></li>
-          <li><a href="/#solutions">BT-AAA</a></li>
-          <li><a href="/#solutions">BT-load Balancer</a></li>
+          <% if (footerProducts.length) { %>
+          <% footerProducts.forEach((product) => { %>
+          <li><a href="/products/<%= product.key %>"><%= product.name %></a></li>
+          <% }) %>
+          <% } else { %>
+          <li><a href="/#solutions">Our solutions</a></li>
+          <% } %>
         </ul>
       </div>
       <div>
