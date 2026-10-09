@@ -3,22 +3,25 @@
 
   <main id="main">
     <!-- Hero -->
-    <section class="hero" id="top">
+    <section class="hero enterprise-hero" id="top">
       <img class="hero-media" src="/images/firewall-demo.png" alt="" width="1672" height="941" fetchpriority="high" />
       <div class="wrap hero-inner">
-        <p class="kicker">Network security for Indian enterprises</p>
-        <h1>Protect what moves your business.</h1>
-        <p class="lead">Bytescreen brings Next-generation Firewalls, SD-WAN, AAA and Load Balancing into one practical security foundation, so your teams connect with confidence and grow without compromise.</p>
+        <p class="kicker">SECURE NETWORKS. STRONGER BUSINESSES.</p>
+        <h1>Your network.<br />Your advantage.<br /><span>Secured.</span></h1>
+        <p class="lead">Move your business forward with confidence. Bring security, connectivity and control together with Bytescreen.</p>
         <div class="actions">
-          <a class="button" href="/demo">Schedule a demo</a>
-          <a class="button button-ghost" href="#solutions">Explore solutions</a>
+          <a class="button" href="/demo">Get a live demo <span aria-hidden="true">→</span></a>
+          <a class="button button-ghost" href="#solutions">Explore our solutions</a>
         </div>
       </div>
+      <div class="hero-caption"><span aria-hidden="true"></span> Protection at every connection</div>
+    </section>
+    <section class="trust-strip" aria-label="Why Bytescreen">
       <div class="wrap">
         <ul class="status-panel" aria-label="Why organisations choose Bytescreen">
-          <li class="status-item"><span class="led" aria-hidden="true"></span><div><b><%= customerCount %>+ organisations</b><span>Government and enterprise customers trust us</span></div></li>
-          <li class="status-item"><span class="led" aria-hidden="true"></span><div><b>ISO 9001, 20000-1 &amp; 27001 certified</b><span>Quality and information security you can rely on</span></div></li>
-          <li class="status-item"><span class="led" aria-hidden="true"></span><div><b>24/7 expert support</b><span>Help whenever your network needs it</span></div></li>
+          <li class="status-item"><div><b><%= customerCount %>+ <small>organisations</small></b><span>Connecting enterprises across India</span></div></li>
+          <li class="status-item"><div><b>ISO <small>certified</small></b><span>9001 · 20000-1 · 27001</span></div></li>
+          <li class="status-item"><div><b>24/7 <small>expert support</small></b><span>Real people. Ready when you need us.</span></div></li>
         </ul>
       </div>
     </section>
@@ -27,7 +30,7 @@
     <section class="section solutions" id="solutions">
       <div class="wrap">
         <div class="section-head">
-          <h2>Built around the way your network works.</h2>
+          <div><p class="eyebrow">THE BYTESCREEN PORTFOLIO</p><h2>One connected business.<br />Every layer protected.</h2></div>
           <p class="intro">From branch connectivity to policy control, Bytescreen brings critical network services into one manageable, business-ready environment.</p>
         </div>
         <%
@@ -43,8 +46,17 @@
           const publishedKeys = new Set(menu.products.concat(menu.platform).map((product) => product.key));
         %>
         <div class="services">
-          <% solutions.forEach((solution) => { %>
+          <% solutions.forEach((solution, index) => { %>
           <article class="service">
+            <div class="solution-icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <% if (index === 0) { %><path d="M24 4 40 10v13c0 10-8 17-16 21C16 40 8 33 8 23V10Z"/><path d="m16 24 5 5 11-12"/><% } %>
+                <% if (index === 1) { %><rect x="16" y="16" width="16" height="16" rx="2"/><path d="M24 16V7m0 25v9M16 24H7m25 0h9"/><circle cx="24" cy="5" r="3"/><circle cx="24" cy="43" r="3"/><circle cx="5" cy="24" r="3"/><circle cx="43" cy="24" r="3"/><% } %>
+                <% if (index === 2) { %><circle cx="24" cy="15" r="8"/><path d="M8 42v-5c0-8 7-12 16-12s16 4 16 12v5Z"/><path d="m19 35 4 4 7-8"/><% } %>
+                <% if (index === 3) { %><rect x="4" y="17" width="12" height="14" rx="2"/><rect x="32" y="4" width="12" height="12" rx="2"/><rect x="32" y="32" width="12" height="12" rx="2"/><path d="M16 24h9V10h7M25 24v14h7"/><% } %>
+              </svg>
+            </div>
+            <p class="solution-category"><%= ['NEXT-GENERATION FIREWALL', 'SOFTWARE-DEFINED WAN', 'IDENTITY & ACCESS', 'APPLICATION DELIVERY'][index] %></p>
             <h3><%= solution.name %></h3>
             <p><%= solution.text %></p>
             <div class="service-actions">
@@ -63,6 +75,7 @@
     <section class="section demo" id="demo">
       <div class="wrap demo-grid">
         <div class="demo-copy">
+          <p class="eyebrow">SECURITY IN ACTION</p>
           <h2>See the firewall at work.</h2>
           <p class="intro">A short look at how Bytescreen inspects traffic, applies policy and keeps your network edge protected.</p>
           <a class="textlink textlink-light" href="/demo">Book a live walkthrough</a>
@@ -127,6 +140,7 @@
     <section class="section platform" id="platform">
       <div class="wrap platform-grid">
         <div class="platform-copy">
+          <p class="eyebrow">A CONNECTED FOUNDATION</p>
           <h2>Less complexity. More control.</h2>
           <p class="intro">Bytescreen brings security, connectivity and visibility together for IT teams, without adding another layer of operational burden.</p>
           <a class="button button-light" href="mailto:sales@bytescreentech.com?subject=Bytescreen%20platform%20enquiry">See how it fits your network</a>
