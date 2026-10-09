@@ -31,6 +31,9 @@ const errorHandler = require(
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
+// Compose exposes only NGINX; it replaces forwarded headers before proxying.
+if (env.BEHIND_NGINX) app.set("trust proxy", 1);
+
 app.use(express.json());
 app.use(cors());
 app.use(
@@ -39,14 +42,17 @@ app.use(
       directives: {
         // Client logos on the home page are loaded from the main website
         "img-src": ["'self'", "data:", "https://www.bytescreentech.com"],
+        // The standalone NGINX entry point uses HTTP until TLS is configured.
+        "upgrade-insecure-requests": env.BEHIND_NGINX ? null : [],
       },
     },
   })
 );
 app.use(morgan("dev"));
-// redirect: false so folders like public/resources/troubleshooting don't hijack page URLs
-// such as /resources/troubleshooting (the static server would otherwise redirect to a trailing slash)
-app.use(express.static(path.join(__dirname, "public"), { redirect: false }));
+// NGINX serves assets in Compose. Keep direct Node development self-contained.
+if (!env.BEHIND_NGINX) {
+  app.use(express.static(path.join(__dirname, "public"), { redirect: false }));
+}
 
 // Defaults shared by every rendered page; routes can override title/description
 app.use((req, res, next) => {
