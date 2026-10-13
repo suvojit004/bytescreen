@@ -31,7 +31,7 @@ const errorHandler = require(
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Compose exposes only NGINX; it replaces forwarded headers before proxying.
+// Compose exposes only NGINX, which forwards Traefik's client and scheme headers.
 if (env.BEHIND_NGINX) app.set("trust proxy", 1);
 
 app.use(express.json());

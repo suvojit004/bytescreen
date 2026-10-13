@@ -20,13 +20,28 @@ trusts the one NGINX proxy hop. Direct `npm run dev` uses Express static serving
 by default. The backend uses its built image; rebuild it after source changes.
 Deploy the image and mounted public directory from the same project revision.
 
-## Adding Traefik later
+## Production with Traefik
 
-Route the entire hostname to NGINX port 80 on a shared Docker network. There
-is no need for separate asset routing. Remove the public NGINX port mapping
-if Traefik becomes the only public entry point.
+Use `docker-compose.prod.yml` from the repository root. Copy
+`.env.production.example` to `.env.production`, set a strong `JWT_SECRET` and
+your base `DOMAIN`. The `TRAEFIK_CERT_RESOLVER` value must match the
+certificate resolver configured in Traefik.
 
-Before enabling Traefik TLS, configure NGINX to trust forwarded protocol and
-client IP information only from the Traefik network/address. The current
-configuration deliberately replaces incoming forwarded headers because it
-is intended for direct public access. Set up HTTPS redirection at Traefik.
+Start the stack with:
+
+```sh
+docker compose --env-file .env.production -f docker-compose.prod.yml up -d --build
+```
+
+Traefik terminates TLS and routes both the base hostname and its `www`
+hostname to NGINX on port 80. All three services use the Compose-managed
+`app-network`, matching the layout in your reference file. Traefik must be
+connected to that same Docker network to reach NGINX. NGINX, the backend, and
+MongoDB do not publish host ports; MongoDB persists data in a named volume.
+Make sure Traefik listens on the `websecure` entrypoint and handles
+HTTP-to-HTTPS redirection.
+
+The Compose labels use `${DOMAIN}` for the base hostname and automatically
+route `www.${DOMAIN}` to the same service. Keep `.env.production` on the VPS
+and out of source control. Deploy the image and mounted public directory from
+the same project revision.
