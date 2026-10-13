@@ -31,7 +31,18 @@ const leadLimiter = rateLimit({
   },
 });
 
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 10,
+  standardHeaders: true,
+  legacyHeaders: false,
+  handler: (req, res, next) => {
+    next(new AppError("Too many authentication attempts. Please try again later.", 429));
+  },
+});
+
 module.exports = {
   globalLimiter,
   leadLimiter,
+  authLimiter,
 };

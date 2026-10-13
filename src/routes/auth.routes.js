@@ -5,9 +5,10 @@ const protect = require("../middlewares/auth.middleware")
 const authorize = require("../middlewares/authorize.middleware")
 const validate = require ("../middlewares/validate.middleware")
 const {loginSchema, setupAdminSchema,} = require("../utils/auth.validation")
+const { authLimiter } = require("../middlewares/rateLimit.middleware");
 
-router.post("/setup", validate(setupAdminSchema), setupAdmin);
-router.post("/login", validate(loginSchema) ,login)
+router.post("/setup", authLimiter, validate(setupAdminSchema), setupAdmin);
+router.post("/login", authLimiter, validate(loginSchema), login);
 
 router.get(
   "/admin-only",

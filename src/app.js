@@ -31,11 +31,21 @@ const errorHandler = require(
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
-// Compose exposes only NGINX, which forwards Traefik's client and scheme headers.
-if (env.BEHIND_NGINX) app.set("trust proxy", 1);
+// Trust only the configured, fixed proxy chain; production Compose sets two hops.
+if (env.BEHIND_NGINX) app.set("trust proxy", env.TRUST_PROXY_HOPS);
 
-app.use(express.json());
-app.use(cors());
+app.use(express.json({ limit: "1mb" }));
+const allowedOrigins = env.CORS_ALLOW_ORIGINS
+  .split(",")
+  .map((origin) => origin.trim())
+  .filter(Boolean);
+app.use(
+  cors({
+    origin(origin, callback) {
+      callback(null, !origin || allowedOrigins.includes(origin));
+    },
+  })
+);
 app.use(
   helmet({
     contentSecurityPolicy: {
@@ -48,7 +58,7 @@ app.use(
     },
   })
 );
-app.use(morgan("dev"));
+app.use(morgan(env.isProduction ? "combined" : "dev"));
 // NGINX serves assets in Compose. Keep direct Node development self-contained.
 if (!env.BEHIND_NGINX) {
   app.use(express.static(path.join(__dirname, "public"), { redirect: false }));

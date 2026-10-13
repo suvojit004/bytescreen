@@ -30,8 +30,10 @@ const {
 const {
   userIdSchema
 } = require("../utils/user.validation");
+const { leadLimiter } = require("../middlewares/rateLimit.middleware");
 router.post(
   "/",
+  leadLimiter,
   validate(
     createLeadSchema
   ),

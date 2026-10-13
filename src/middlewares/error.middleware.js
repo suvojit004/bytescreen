@@ -50,15 +50,20 @@ const errorHandler = (err, req, res, next) => {
   // Use a status set earlier (e.g. 404 from notFound) when the error has none of its own
   const statusCode =
     err.statusCode ||
+    err.status ||
     (res.statusCode >= 400 ? res.statusCode : 500);
 
   if (statusCode === 404 && wantsPage(req)) {
     return renderNotFound(req, res);
   }
 
-  const message =
-    err.message ||
-    "Internal Server Error";
+  if (statusCode >= 500) {
+    console.error(err);
+  }
+
+  const message = statusCode >= 500
+    ? "Internal Server Error"
+    : err.message || "Request failed";
 
   res.status(statusCode).json({
     success: false,

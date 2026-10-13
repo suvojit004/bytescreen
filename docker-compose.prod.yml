@@ -12,7 +12,7 @@ services:
       - app-network
     labels:
       - traefik.enable=true
-      - traefik.http.routers.bytescreen.rule=Host(`${DOMAIN:?Set DOMAIN in .env.production}`) || Host(`www.${DOMAIN:?Set DOMAIN in .env.production}`)
+      - traefik.http.routers.bytescreen.rule=Host(`${DOMAIN:?Set DOMAIN in .env}`) || Host(`www.${DOMAIN:?Set DOMAIN in .env}`)
       - traefik.http.routers.bytescreen.entrypoints=websecure
       - traefik.http.routers.bytescreen.tls=true
       - traefik.http.routers.bytescreen.tls.certresolver=${TRAEFIK_CERT_RESOLVER:-letsencrypt}
@@ -25,6 +25,11 @@ services:
       timeout: 5s
       retries: 3
       start_period: 10s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   backend:
     build:
@@ -39,7 +44,7 @@ services:
       NODE_ENV: production
       PORT: 3000
       BEHIND_NGINX: "true"
-      MONGO_URI: mongodb://mongodb:27017/bytescreen
+      TRUST_PROXY_HOPS: 2
     depends_on:
       mongodb:
         condition: service_healthy
@@ -51,20 +56,37 @@ services:
       timeout: 5s
       retries: 3
       start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   mongodb:
     image: mongo:8
     restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER:?Set MONGO_ROOT_USER in .env}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD:?Set MONGO_ROOT_PASSWORD in .env}
+      MONGO_INITDB_DATABASE: bytescreen
+      MONGO_APP_USER: ${MONGO_APP_USER:?Set MONGO_APP_USER in .env}
+      MONGO_APP_PASSWORD: ${MONGO_APP_PASSWORD:?Set MONGO_APP_PASSWORD in .env}
     volumes:
       - mongodb_data:/data/db
+      - ./mongo/init.js:/docker-entrypoint-initdb.d/01-create-app-user.js:ro
     networks:
       - app-network
     healthcheck:
-      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping').ok"]
+      test: ["CMD-SHELL", "mongosh --quiet --username \"$${MONGO_INITDB_ROOT_USERNAME}\" --password \"$${MONGO_INITDB_ROOT_PASSWORD}\" --authenticationDatabase admin --eval \"db.adminCommand('ping').ok\""]
       interval: 30s
       timeout: 10s
       retries: 5
       start_period: 20s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 networks:
   app-network:
